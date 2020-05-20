@@ -3,6 +3,8 @@ from django.shortcuts import render
 from .forms import *
 from .processa_csv import processa_arquivo_despesas_pagas_exercicio
 
+def index(request):
+    return render(request, 'menu.html', {})
 
 def upload_file(request):
     if request.method == 'POST':
