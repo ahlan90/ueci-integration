@@ -1,1 +1,1 @@
-web: gunicorn ueci.wsgi -k gevent
+web: gunicorn ueci.wsgi
