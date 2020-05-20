@@ -19,7 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="db240bbe-50f1-4247-a99c-8f993d4e8206" name="Default Changelist" comment="" />
+    <list default="true" id="db240bbe-50f1-4247-a99c-8f993d4e8206" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/ueci/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/ueci/settings.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
