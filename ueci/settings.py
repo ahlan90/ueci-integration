@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+     'crispy_forms',
     'sigefes'
 ]
 
@@ -129,3 +130,8 @@ STATICFILES_DIRS = (os.path.join('static'), )
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

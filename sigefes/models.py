@@ -1,3 +1,11 @@
 from django.db import models
 
 # Create your models here.
+class UnidadeGestora(models.Model):
+    codigo = models.CharField(max_length=20, primary_key=True)
+
+    def __str__(self):
+        return self.codigo
+
+
+## NOTA DE LIQUIDACAO
