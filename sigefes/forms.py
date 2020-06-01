@@ -1,4 +1,7 @@
 from django import forms
 
-class DespesasPagasExercicioForm(forms.Form):
+class DespesasLiquidadasExcelForm(forms.Form):
+    arquivo = forms.FileField()
+
+class DespesasEmpenhadasExercicioForm(forms.Form):
     arquivo = forms.FileField()

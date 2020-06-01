@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
      'crispy_forms',
-    'sigefes'
+    'sigefes',
+    'segregacao_funcao'
 ]
 
 MIDDLEWARE = [
