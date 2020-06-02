@@ -19,9 +19,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('sigefes.urls')),
-<<<<<<< HEAD
     path('', include('reluci.urls')),
-=======
     path('', include('segregacao_funcao.urls'))
->>>>>>> b7923af4202cebb4d6c45305071d3275e97beec4
 ]
