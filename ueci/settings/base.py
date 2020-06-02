@@ -42,8 +42,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
      'crispy_forms',
     'sigefes',
+<<<<<<< HEAD:ueci/settings/base.py
     'organograma',
     'reluci'
+=======
+    'segregacao_funcao'
+>>>>>>> b7923af4202cebb4d6c45305071d3275e97beec4:ueci/settings.py
 ]
 
 MIDDLEWARE = [
