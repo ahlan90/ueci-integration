@@ -18,8 +18,6 @@ class GrupoPontoControle(models.Model):
 
     item = models.ForeignKey(ItensPontoControle, on_delete=models.CASCADE, null=True, blank=True, related_name='grupos')
 
-    ponto_controle_relacionado = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
-
     def __str__(self):
         return self.get_codigo_completo() + " - " + self.nome
 
@@ -35,6 +33,8 @@ class PontoControle(models.Model):
     codigo = models.CharField(max_length=50)
     nome = models.CharField(max_length=300)
     descricao = models.CharField(max_length=1000, null=True, blank=True)
+
+    ponto_controle_relacionado = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
 
     grupo = models.ForeignKey(GrupoPontoControle, on_delete=models.CASCADE, related_name='pontos')
 
