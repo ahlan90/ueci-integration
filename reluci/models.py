@@ -1,6 +1,6 @@
 from django.db import models
 
-class ItensPontoControle(models.Model):
+class ItemAbordagem(models.Model):
 
     codigo = models.CharField(max_length=50)
     nome = models.CharField(max_length=300)
@@ -10,13 +10,13 @@ class ItensPontoControle(models.Model):
         return self.codigo + " - " + self.nome
 
 
-class GrupoPontoControle(models.Model):
+class ItemGestao(models.Model):
 
     codigo = models.CharField(max_length=50)
     nome = models.CharField(max_length=300)
     descricao = models.CharField(max_length=300, null=True, blank=True)
 
-    item = models.ForeignKey(ItensPontoControle, on_delete=models.CASCADE, null=True, blank=True, related_name='grupos')
+    item = models.ForeignKey(ItemAbordagem, on_delete=models.CASCADE, null=True, blank=True, related_name='grupos')
 
     def __str__(self):
         return self.get_codigo_completo() + " - " + self.nome
@@ -36,7 +36,7 @@ class PontoControle(models.Model):
 
     ponto_controle_relacionado = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
 
-    grupo = models.ForeignKey(GrupoPontoControle, on_delete=models.CASCADE, related_name='pontos')
+    grupo = models.ForeignKey(ItemGestao, on_delete=models.CASCADE, related_name='pontos')
 
     CLASSIFICACOES = (
         ('ATENDE', 'Atende'),

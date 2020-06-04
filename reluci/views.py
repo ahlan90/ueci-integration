@@ -1,12 +1,12 @@
 from django.shortcuts import render
 
 # Create your views here.
-from reluci.models import ItensPontoControle
+from reluci.models import ItemAbordagem
 
 
 def checklist_reluci(request):
 
-    itens = ItensPontoControle.objects.all()
+    itens = ItemAbordagem.objects.all().order_by('codigo')
 
     data = {
         'itens': itens

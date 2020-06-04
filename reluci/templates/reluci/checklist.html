@@ -11,9 +11,9 @@
 
     {% if item.grupos.all %}
 
-    <h2>{{ item.nome }}</h2>
+    <h4 class="ml-4">{{ item.codigo }} - {{ item.nome }}</h4>
     <div class="row mt-3 ">
-        <div class="offset-2 col-8">
+        <div class="col-12">
             <div class="accordion" id="accordion{{item.id}}">
                 <div class="card">
                     {% for grupo in item.grupos.all %}
@@ -22,7 +22,7 @@
                             <button class="btn btn-block text-left" type="button" data-toggle="collapse"
                                     data-target="#collapse{{ grupo.id }}" aria-expanded="true"
                                     aria-controls="collapse{{ grupo.id }}">
-                                <h5 class="m-0">{{ grupo.nome }}</h5>
+                                <h5 class="m-0">{{ grupo.get_codigo_completo }} - {{ grupo.nome }}</h5>
                             </button>
                         </h2>
                     </div>
@@ -33,7 +33,7 @@
                         <table class="table">
                             {% for ponto in grupo.pontos.all %}
                             <tr>
-                                <td>{{ ponto.nome }}</td>
+                                <td class="pl-5">{{ ponto.get_codigo_completo }} - {{ ponto.nome }}</td>
                                 <td class="text-center">
                                     <input type="checkbox">
                                 </td>
