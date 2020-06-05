@@ -1,3 +1,4 @@
+from ckeditor.fields import RichTextField
 from django.db import models
 
 class ItemAbordagem(models.Model):
@@ -16,7 +17,7 @@ class ItemGestao(models.Model):
     nome = models.CharField(max_length=300)
     descricao = models.CharField(max_length=300, null=True, blank=True)
 
-    item = models.ForeignKey(ItensPontoControle, on_delete=models.CASCADE, null=True, blank=True, related_name='grupos')
+    item = models.ForeignKey(ItemAbordagem, on_delete=models.CASCADE, null=True, blank=True, related_name='grupos')
 
     def __str__(self):
         return self.get_codigo_completo() + " - " + self.nome
@@ -36,7 +37,7 @@ class PontoControle(models.Model):
 
     ponto_controle_relacionado = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
 
-    grupo = models.ForeignKey(GrupoPontoControle, on_delete=models.CASCADE, related_name='pontos')
+    grupo = models.ForeignKey(ItemGestao, on_delete=models.CASCADE, related_name='pontos')
 
     CLASSIFICACOES = (
         ('ATENDE', 'Atende'),
@@ -53,6 +54,7 @@ class PontoControle(models.Model):
     )
 
     status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
+    sintese = RichTextField()
 
     def __str__(self):
         return self.get_codigo_completo() + " - " + self.nome
@@ -64,38 +66,38 @@ class PontoControle(models.Model):
             return self.codigo
 
 
-class ItensGestao(models.Model):
-
-    codigo = models.CharField(max_length=50)
-    nome = models.CharField(max_length=300)
-    descricao = models.CharField(max_length=1000, null=True, blank=True)
-
-    ponto_controle = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
-
-    CLASSIFICACOES = (
-        ('ATENDE', 'Atende'),
-        ('ATENDE_PARCIALMENTE', 'Atende parcialmente'),
-        ('NAO_ATENDE', 'Não atende'),
-    )
-
-    classificacao = models.CharField(max_length=30, choices=CLASSIFICACOES, null=True, blank=True)
-
-    STATUS = (
-        ('NAO_INICIADO', 'Não iniciado'),
-        ('EM_ANDAMENTO', 'Em andamento'),
-        ('FINALIZADO', 'Finalizado'),
-    )
-
-    status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
-
-    def __str__(self):
-        return self.get_codigo_completo() + " - " + self.nome
-
-    def get_codigo_completo(self):
-        if self.grupo:
-            return self.grupo.get_codigo_completo() + '.' + self.codigo
-        else:
-            return self.codigo
+# class ItensGestao(models.Model):
+#
+#     codigo = models.CharField(max_length=50)
+#     nome = models.CharField(max_length=300)
+#     descricao = models.CharField(max_length=1000, null=True, blank=True)
+#
+#     ponto_controle = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
+#
+#     CLASSIFICACOES = (
+#         ('ATENDE', 'Atende'),
+#         ('ATENDE_PARCIALMENTE', 'Atende parcialmente'),
+#         ('NAO_ATENDE', 'Não atende'),
+#     )
+#
+#     classificacao = models.CharField(max_length=30, choices=CLASSIFICACOES, null=True, blank=True)
+#
+#     STATUS = (
+#         ('NAO_INICIADO', 'Não iniciado'),
+#         ('EM_ANDAMENTO', 'Em andamento'),
+#         ('FINALIZADO', 'Finalizado'),
+#     )
+#
+#     status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
+#
+#     def __str__(self):
+#         return self.get_codigo_completo() + " - " + self.nome
+#
+#     def get_codigo_completo(self):
+#         if self.grupo:
+#             return self.grupo.get_codigo_completo() + '.' + self.codigo
+#         else:
+#             return self.codigo
 
 
 class Atividade(models.Model):
@@ -111,7 +113,7 @@ class Atividade(models.Model):
 
     status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
 
-    ponto_controle = models.ForeignKey(PontoControle, on_delete=models.CASCADE)
+    ponto_controle = models.ForeignKey(PontoControle, on_delete=models.CASCADE, related_name='atividades')
 
     def __str__(self):
         return self.codigo + " - " + self.descricao
