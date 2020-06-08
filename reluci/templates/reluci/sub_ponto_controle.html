@@ -1,0 +1,58 @@
+<ul class="list-unstyled">
+    {% for sub_ponto in ponto.sub_pontos_controle.all %}
+    <li>
+        <button type="button" class="btn" data-toggle="modal" data-target="#modalSub">
+            <i class="fas fa-edit"></i>
+        </button>
+        <button type="button" class="btn">
+            {{ sub_ponto.get_codigo_completo }} - {{ sub_ponto.nome }}
+        </button>
+        <table class="table">
+            {% for tarefa in sub_ponto.tarefas.all %}
+            <tr>
+                <td class="px-3">
+                    <button class="btn" type="button"
+                            data-toggle="collapse" data-target="#collapseTf{{ tarefa.get_codigo_completo|cut:'.' }}"
+                            aria-expanded="false" aria-controls="collapseTf{{ tarefa.get_codigo_completo|cut:'.' }}">
+                        {{ tarefa.codigo }}. {{ tarefa.descricao }}
+                    </button>
+
+                    <div class="collapse" id="collapseTf{{ tarefa.get_codigo_completo|cut:'.' }}">
+                        {% for atividade in tarefa.atividades.all %}
+                        <ul class="list-unstyled mt-2">
+                            <li class="mt-2 pl-4">
+                                <i class="fa fa-check"></i>
+                                {{ atividade.descricao }}
+                            </li>
+                        </ul>
+                        {% endfor %}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </li>
+    {% endfor %}
+</ul>
+
+
+<div class="modal fade" id="modalSub" tabindex="-1" role="dialog" aria-labelledby="modalSubPontoControle"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Relato Sub Ponto de Controle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Aqui vai ter o formulário rico...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>

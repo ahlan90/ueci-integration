@@ -7,12 +7,12 @@ from reluci.models import ItemAbordagem, PontoControle
 
 def checklist_reluci(request):
 
-    itens = ItemAbordagem.objects.all().order_by('codigo')
+    itens_abordagem = ItemAbordagem.objects.all().order_by('codigo')
 
     form = SintesePontoControleForm()
 
     data = {
-        'itens': itens,
+        'itens_abordagem': itens_abordagem,
         'form': form
     }
 
@@ -26,4 +26,4 @@ def relato_ponto_controle(request, pk):
         'ponto': ponto
     }
 
-    return render(request, 'reluci/relato_ponto_controle.html', data)
+    return render(request, 'reluci/atividades.html', data)

@@ -8,44 +8,51 @@
 <h3 class="text-center mb-4">Checklist RELUCI</h3>
 
 
-{% for item in itens %}
+{% for item_abordagem in itens_abordagem %}
 <div class="mb-4">
 
-    {% if item.grupos.all %}
+    {% if item_abordagem.itens_gestao.all %}
 
-    <h4 class="ml-4">{{ item.codigo }} - {{ item.nome }}</h4>
+    <h4 class="ml-4">{{ item_abordagem.codigo }} - {{ item_abordagem.nome }}</h4>
     <div class="row mt-3 ">
         <div class="col-12">
-            <div class="accordion" id="accordion{{item.id}}">
+            <div class="accordion" id="accordion{{item_abordagem.id}}">
                 <div class="card">
-                    {% for grupo in item.grupos.all %}
-                    <div class="card-header" id="heading{{ grupo.id }}">
+                    {% for item_gestao in item_abordagem.itens_gestao.all %}
+                    <div class="card-header" id="heading{{ item_gestao.id }}">
                         <h2 class="mb-0">
                             <button class="btn btn-block text-left" type="button" data-toggle="collapse"
-                                    data-target="#collapse{{ grupo.id }}" aria-expanded="true"
-                                    aria-controls="collapse{{ grupo.id }}">
-                                <h5 class="m-0">{{ grupo.get_codigo_completo }} - {{ grupo.nome }}</h5>
+                                    data-target="#collapse{{ item_gestao.id }}" aria-expanded="true"
+                                    aria-controls="collapse{{ item_gestao.id }}">
+                                <h5 class="m-0">{{ item_gestao.get_codigo_completo }} - {{ item_gestao.nome }}</h5>
                             </button>
                         </h2>
                     </div>
 
-                    <div id="collapse{{ grupo.id }}" class="collapse" aria-labelledby="heading{{ grupo.id }}"
-                         data-parent="#accordion{{ item.id }}">
+                    <div id="collapse{{ item_gestao.id }}" class="collapse" aria-labelledby="heading{{ item_gestao.id }}"
+                         data-parent="#accordion{{ item_abordagem.id }}">
 
                         <table class="table">
-                            {% for ponto in grupo.pontos.all %}
+                            {% for ponto in item_gestao.pontos.all %}
                             <tr>
-                                <td class="px-5">
+                                <td class="px-3">
                                     <button class="btn" type="button"
                                         data-toggle="collapse" data-target="#collapsePt{{ ponto.get_codigo_completo|cut:'.' }}"
                                         aria-expanded="false" aria-controls="collapsePt{{ ponto.get_codigo_completo|cut:'.' }}">
                                     {{ ponto.get_codigo_completo }} - {{ ponto.nome }}
                                     </button>
 
+
                                     <div class="collapse" id="collapsePt{{ ponto.get_codigo_completo|cut:'.' }}">
-                                      <div class="card card-body mt-3">
-                                          {% include 'reluci/relato_ponto_controle.html' %}
-                                      </div>
+                                        {% if not ponto.sub_pontos_controle.all %}
+                                          <div class="card card-body mt-3">
+                                              {% include 'reluci/atividades.html' %}
+                                          </div>
+                                        {% else %}
+                                          <div class="sub-ponto-controle mt-2 px-3">
+                                              {% include 'reluci/sub_ponto_controle.html' %}
+                                          </div>
+                                        {% endif %}
                                     </div>
                                 </td>
                             </tr>
