@@ -32,7 +32,6 @@ $(function () {
       dataType: 'json',
       success: function (data) {
         if (data.form_is_valid) {
-          $("#ponto-controle-table tbody").html(data.html_ponto_controle_list);
           $("#modal-checklist").modal("hide");
         }
         else {
@@ -47,11 +46,11 @@ $(function () {
   /* Binding */
 
   // Create ponto-controle
-  $(".js-create-ponto-controle").click(loadForm);
+  $(".js-create-analise-ponto-controle").click(loadForm);
   $("#modal-checklist").on("submit", ".js-ponto-controle-create-form", saveForm);
 
   // Update ponto-controle
-  $("#ponto-controle-table").on("click", ".js-update-ponto-controle", loadForm);
+  $(".js-update-analise-ponto-controle").click(loadForm);
   $("#modal-checklist").on("submit", ".js-ponto-controle-update-form", saveForm);
 
   // Delete ponto-controle

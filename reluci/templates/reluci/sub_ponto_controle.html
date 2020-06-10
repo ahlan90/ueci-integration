@@ -1,9 +1,7 @@
 <ul class="list-unstyled">
     {% for sub_ponto in ponto.sub_pontos_controle.all %}
     <li>
-        <button type="button" class="btn btnModal js-create-ponto-controle" data-url="{% url 'ponto_controle_create' %}" >
-            <i class="fas fa-edit"></i>
-        </button>
+
         <button type="button" class="btn">
             {{ sub_ponto.get_codigo_completo }} - {{ sub_ponto.nome }}
         </button>

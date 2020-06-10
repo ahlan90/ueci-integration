@@ -1,11 +1,15 @@
 from ckeditor.widgets import CKEditorWidget
-from django.forms import ModelForm, CharField, TextInput
+from django.forms import ModelForm, CharField, TextInput, forms, HiddenInput
 
-from reluci.models import PontoControle
+from reluci.models import PontoControle, AnalisePontoControle
 
 
-class PontoControleForm(ModelForm):
+class AnalisePontoControleForm(ModelForm):
 
     class Meta:
-        model = PontoControle
-        fields = ['analise']
+        model = AnalisePontoControle
+        fields = ['classificacao', 'status', 'analise', 'ponto_controle', 'user']
+        widgets = {
+            'ponto_controle': HiddenInput(),
+            'user': HiddenInput()
+        }

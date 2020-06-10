@@ -1,16 +1,23 @@
-<form method="post" action="{% url 'ponto_controle_update' form.instance.pk %}" class="js-ponto-controle-update-form">
-  {% csrf_token %}
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <h4 class="modal-title">Atualizar Ponto Contole</h4>
-  </div>
-  <div class="modal-body">
-    {% include 'reluci/ponto-controle/cria_ponto_controle_form.html' %}
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-    <button type="submit" class="btn btn-primary">Atualizar</button>
-  </div>
+{% extends 'base_modal.html' %}
+
+{% block content_modal %}
+
+<form method="post" action="{% url 'analise_ponto_controle_update' form.instance.ponto_controle.pk %}" class="js-ponto-controle-update-form">
+    {% csrf_token %}
+    <div class="modal-header">
+        <h5 class="modal-title">Análise Ponto Controle</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        {% include 'reluci/ponto-controle/cria_ponto_controle_form.html' %}
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </div>
 </form>
+
+{% endblock content_modal %}
+

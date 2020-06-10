@@ -1,4 +1,5 @@
 from ckeditor.fields import RichTextField
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -10,6 +11,9 @@ class ItemAbordagem(models.Model):
 
     def __str__(self):
         return self.codigo + " - " + self.nome
+
+    class Meta:
+        ordering = ('codigo',)
 
 
 class ItemGestao(models.Model):
@@ -29,6 +33,9 @@ class ItemGestao(models.Model):
         else:
             return self.codigo
 
+    class Meta:
+        ordering = ('codigo',)
+
 
 class PontoControle(models.Model):
 
@@ -39,6 +46,29 @@ class PontoControle(models.Model):
     ponto_controle_relacionado = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
 
     grupo = models.ForeignKey(ItemGestao, on_delete=models.CASCADE, related_name='pontos')
+
+    def __str__(self):
+        return self.get_codigo_completo() + " - " + self.nome
+
+    def get_codigo_completo(self):
+        if self.grupo:
+            return self.grupo.get_codigo_completo() + '.' + self.codigo
+        else:
+            return self.codigo
+
+    class Meta:
+        ordering = ('codigo',)
+
+
+class AnalisePontoControle(models.Model):
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ponto_controle = models.ForeignKey(PontoControle, on_delete=models.CASCADE, related_name='analises')
+    analise = RichTextField(null=True, blank=True)
+
+    criado = models.DateTimeField(auto_now_add=True)
+
+    alterado = models.DateTimeField(auto_now=True)
 
     CLASSIFICACOES = (
         ('ATENDE', 'Atende'),
@@ -55,16 +85,9 @@ class PontoControle(models.Model):
         ('FINALIZADO', 'Finalizado'),
     )
     status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
-    analise = RichTextField()
 
     def __str__(self):
-        return self.get_codigo_completo() + " - " + self.nome
-
-    def get_codigo_completo(self):
-        if self.grupo:
-            return self.grupo.get_codigo_completo() + '.' + self.codigo
-        else:
-            return self.codigo
+        return 'Ponto de Controle: ' + self.ponto_controle.get_codigo_completo() + ' - Usuário: ' + str(self.user)
 
 
 class SubPontoControle(models.Model):
@@ -94,8 +117,6 @@ class SubPontoControle(models.Model):
     )
     classificacao = models.CharField(max_length=30, choices=CLASSIFICACOES, null=True, blank=True)
 
-    observacao = RichTextField()
-
     def __str__(self):
         return self.get_codigo_completo() + " - " + self.nome
 
@@ -105,12 +126,21 @@ class SubPontoControle(models.Model):
         else:
             return self.codigo
 
+    class Meta:
+        ordering = ('codigo',)
+
+
+class AnaliseSubPontoControle(models.Model):
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    sub_ponto_controle = models.ForeignKey(SubPontoControle, on_delete=models.CASCADE)
+    analise = RichTextField(null=True, blank=True)
+
 
 class Tarefa(models.Model):
 
     codigo = models.CharField(max_length=50)
     descricao = models.TextField(null=True, blank=True)
-    observacao = RichTextField()
 
     STATUS = (
         ('NAO_INICIADO', 'Não iniciado'),
@@ -138,9 +168,19 @@ class Tarefa(models.Model):
                 return self.sub_ponto_controle.get_codigo_completo() + '.' + self.codigo
             return self.codigo
 
+    class Meta:
+        ordering = ('codigo',)
+
+
+class ObservacaoTarefa(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    tarefa = models.ForeignKey(Tarefa, on_delete=models.CASCADE)
+    observacao = RichTextField()
+
 
 class Atividade(models.Model):
 
+    codigo = models.CharField(max_length=50, null=True, blank=True)
     descricao = models.TextField(null=True, blank=True)
     observacao = RichTextField()
 
@@ -156,3 +196,12 @@ class Atividade(models.Model):
 
     def __str__(self):
         return self.descricao
+
+    class Meta:
+        ordering = ('codigo',)
+
+
+class ObservacaoAtividade(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    atividade = models.ForeignKey(Atividade, on_delete=models.CASCADE)
+    observacao = RichTextField()
