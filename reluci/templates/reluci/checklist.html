@@ -6,105 +6,7 @@
 
 <h3 class="text-center mb-4">Checklist RELUCI</h3>
 
-
-{% for item_abordagem in itens_abordagem %}
-<div class="mb-4">
-
-    {% if item_abordagem.itens_gestao.all %}
-
-    <h4 class="ml-4">{{ item_abordagem.codigo }} - {{ item_abordagem.nome }}</h4>
-    <div class="row mt-3 ">
-        <div class="col-12">
-            <div class="accordion" id="accordion{{item_abordagem.id}}">
-                <div class="card">
-                    {% for item_gestao in item_abordagem.itens_gestao.all %}
-                    <div class="card-header d-flex justify-content-between" id="heading{{ item_gestao.id }}">
-                        <div>
-                            <h2 class="mb-0">
-                                <button class="btn btn-block text-left" type="button" data-toggle="collapse"
-                                        data-target="#collapse{{ item_gestao.id }}" aria-expanded="true"
-                                        aria-controls="collapse{{ item_gestao.id }}">
-                                    <h5 class="m-0">{{ item_gestao.get_codigo_completo }} - {{ item_gestao.nome }}</h5>
-                                </button>
-
-                            </h2>
-                        </div>
-                        <div class="w-25">
-                            <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="collapse{{ item_gestao.id }}" class="collapse"
-                         aria-labelledby="heading{{ item_gestao.id }}"
-                         data-parent="#accordion{{ item_abordagem.id }}">
-
-                        <table class="table">
-                            {% for ponto in item_gestao.pontos.all %}
-                            <tr>
-                                <td class="px-3">
-                                    <div class="d-flex justify-content-between">
-                                        <span class="pl-4 align-self-center">
-                                            {{ ponto.get_codigo_completo }} - {{ ponto.nome }}
-                                            <button class="btn btn-sm" type="button"
-                                                    data-toggle="collapse"
-                                                    data-target="#collapsePt{{ ponto.get_codigo_completo|cut:'.' }}"
-                                                    aria-expanded="false"
-                                                    aria-controls="collapsePt{{ ponto.get_codigo_completo|cut:'.' }}">
-                                            <i class="fa fa-arrow-down"></i>
-                                            </button>
-                                        </span>
-                                        <div>
-                                            <span class="badge badge-primary">FINALIZADO</span>
-                                            <span class="badge badge-primary">NÃO ATENDE</span>
-                                        </div>
-                                        <div class="align-self-end">
-                                            {% if not ponto.analises.all %}
-                                            <button type="button"
-                                                    class="btn btn-primary btn-sm btnModal js-create-analise-ponto-controle"
-                                                    data-url="{% url 'analise_ponto_controle_create' ponto.pk %}">
-                                                <i class="fa fa-plus"></i>
-                                                Nova
-                                            </button>
-                                            {% else %}
-                                            <button type="button"
-                                                    class="btn btn-primary btn-sm btnModal js-update-analise-ponto-controle"
-                                                    data-url="{% url 'analise_ponto_controle_update' ponto.pk %}">
-                                                <i class="fa fa-edit"></i>
-                                                Atualizar
-                                            </button>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-
-                                    <div class="collapse" id="collapsePt{{ ponto.get_codigo_completo|cut:'.' }}">
-                                        {% if not ponto.sub_pontos_controle.all %}
-                                        <div class="card card-body mt-3">
-                                            {% include 'reluci/atividades.html' %}
-                                        </div>
-                                        {% else %}
-                                        <div class="sub-ponto-controle mt-2 px-3">
-                                            {% include 'reluci/sub_ponto_controle.html' %}
-                                        </div>
-                                        {% endif %}
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-</div>
-{% endfor %}
-
+{% include 'reluci/lista_item_abordagem.html' %}
 
 <!-- MODAL -->
 <div class="modal fade" id="modal-checklist">
@@ -121,8 +23,6 @@
 
 {{ block.super }}
 
-<script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
-<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
 <script src="{% static 'apps/reluci/ponto-controle.js' %}" type="text/javascript" charset="utf-8"></script>
 
 {% endblock %}

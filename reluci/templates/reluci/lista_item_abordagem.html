@@ -1,0 +1,18 @@
+{% for item_abordagem in itens_abordagem %}
+<div class="mb-4">
+
+    {% if item_abordagem.itens_gestao.all %}
+
+    <h4 class="ml-4">{{ item_abordagem.codigo }} - {{ item_abordagem.nome }}</h4>
+    <div class="row mt-3 ">
+        <div class="col-12">
+            <div class="accordion" id="accordion{{item_abordagem.id}}">
+                <div class="card">
+                    {% include 'reluci/lista_item_gestao.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endfor %}
