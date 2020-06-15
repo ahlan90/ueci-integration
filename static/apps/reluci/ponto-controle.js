@@ -1,15 +1,6 @@
-
 $(function () {
 
-//    $(document).on('click', '.btnModal', function(){
-//        $('#modal').modal('show');
-//        CKEDITOR.replace('ckeditorwidget');
-//    });
-
-  /* Functions */
-
   var loadForm = function () {
-    console.log('');
     var btn = $(this);
     $.ajax({
       url: btn.attr("data-url"),

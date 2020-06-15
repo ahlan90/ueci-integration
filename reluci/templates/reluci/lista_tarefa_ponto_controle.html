@@ -1,0 +1,26 @@
+
+        <table class="table">
+            {% for tarefa in ponto.tarefas.all %}
+            <tr>
+                <td class="px-3">
+                    <button class="btn" type="button"
+                            data-toggle="collapse" data-target="#collapseTf{{ tarefa.get_codigo_completo|cut:'.' }}"
+                            aria-expanded="false" aria-controls="collapseTf{{ tarefa.get_codigo_completo|cut:'.' }}">
+                        {{ tarefa.codigo }}. {{ tarefa.descricao }}
+                    </button>
+
+                    <div class="collapse" id="collapseTf{{ tarefa.get_codigo_completo|cut:'.' }}">
+                        {% for atividade in tarefa.atividades.all %}
+                        <ul class="list-unstyled mt-2">
+                            <li class="mt-2 pl-4">
+                                <i class="fa fa-check"></i>
+                                {{ atividade.descricao }}
+                            </li>
+                        </ul>
+                        {% endfor %}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+

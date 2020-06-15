@@ -67,7 +67,6 @@ class AnalisePontoControle(models.Model):
     analise = RichTextField(null=True, blank=True)
 
     criado = models.DateTimeField(auto_now_add=True)
-
     alterado = models.DateTimeField(auto_now=True)
 
     CLASSIFICACOES = (
@@ -102,20 +101,6 @@ class SubPontoControle(models.Model):
         null=True,
         blank=True, related_name='sub_pontos_controle')
 
-    STATUS = (
-        ('NAO_INICIADO', 'Não iniciado'),
-        ('EM_ANDAMENTO', 'Em andamento'),
-        ('AGUARDANDO', 'Aguardando'),
-        ('FINALIZADO', 'Finalizado'),
-    )
-    status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
-
-    CLASSIFICACOES = (
-        ('ATENDE', 'Atende'),
-        ('ATENDE_PARCIALMENTE', 'Atende parcialmente'),
-        ('NAO_ATENDE', 'Não atende'),
-    )
-    classificacao = models.CharField(max_length=30, choices=CLASSIFICACOES, null=True, blank=True)
 
     def __str__(self):
         return self.get_codigo_completo() + " - " + self.nome
@@ -135,6 +120,21 @@ class AnaliseSubPontoControle(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     sub_ponto_controle = models.ForeignKey(SubPontoControle, on_delete=models.CASCADE)
     analise = RichTextField(null=True, blank=True)
+
+    STATUS = (
+        ('NAO_INICIADO', 'Não iniciado'),
+        ('EM_ANDAMENTO', 'Em andamento'),
+        ('AGUARDANDO', 'Aguardando'),
+        ('FINALIZADO', 'Finalizado'),
+    )
+    status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
+
+    CLASSIFICACOES = (
+        ('ATENDE', 'Atende'),
+        ('ATENDE_PARCIALMENTE', 'Atende parcialmente'),
+        ('NAO_ATENDE', 'Não atende'),
+    )
+    classificacao = models.CharField(max_length=30, choices=CLASSIFICACOES, null=True, blank=True)
 
 
 class Tarefa(models.Model):
@@ -182,7 +182,6 @@ class Atividade(models.Model):
 
     codigo = models.CharField(max_length=50, null=True, blank=True)
     descricao = models.TextField(null=True, blank=True)
-    observacao = RichTextField()
 
     STATUS = (
         ('NAO_INICIADO', 'Não iniciado'),

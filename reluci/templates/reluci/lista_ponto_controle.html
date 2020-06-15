@@ -1,0 +1,54 @@
+<table class="table">
+
+    {% for ponto in item_gestao.pontos.all %}
+    <tr>
+        <td class="px-3">
+            <div class="d-flex justify-content-between">
+                <span class="pl-4 align-self-center">
+                    {{ ponto.get_codigo_completo }} - {{ ponto.nome }}
+                    <button class="btn btn-sm" type="button"
+                            data-toggle="collapse"
+                            data-target="#collapsePt{{ ponto.get_codigo_completo|cut:'.' }}"
+                            aria-expanded="false"
+                            aria-controls="collapsePt{{ ponto.get_codigo_completo|cut:'.' }}">
+                    <i class="fa fa-arrow-down"></i>
+                    </button>
+                </span>
+                <div>
+                    <span class="badge badge-primary">FINALIZADO</span>
+                    <span class="badge badge-primary">NÃO ATENDE</span>
+                </div>
+                <div class="align-self-end">
+                    {% if not ponto.analises.all %}
+                    <button type="button"
+                            class="btn btn-primary btn-sm btnModal js-create-analise-ponto-controle"
+                            data-url="{% url 'analise_ponto_controle_create' ponto.pk %}">
+                        <i class="fa fa-plus"></i>
+                        Nova
+                    </button>
+                    {% else %}
+                    <button type="button"
+                            class="btn btn-primary btn-sm btnModal js-update-analise-ponto-controle"
+                            data-url="{% url 'analise_ponto_controle_update' ponto.pk %}">
+                        <i class="fa fa-edit"></i>
+                        Atualizar
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="collapse" id="collapsePt{{ ponto.get_codigo_completo|cut:'.' }}">
+                {% if not ponto.sub_pontos_controle.all %}
+                <div class="tarefas mt-2 px-3">
+                    {% include 'reluci/lista_tarefa_ponto_controle.html' %}
+                </div>
+                {% else %}
+                <div class="sub-ponto-controle mt-2 px-3">
+                    {% include 'reluci/sub_ponto_controle.html' %}
+                </div>
+                {% endif %}
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
