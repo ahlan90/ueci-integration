@@ -57,7 +57,12 @@
                     <span></span>
                 </button>
                 {% endif %}
-                <h4 class="text-center w-100">SiSUECI</h4>
+
+                {% if titulo %}
+                <h4 class="text-center w-100">{{ titulo }}</h4>
+                {% else %}
+                <h4 class="text-center w-100">SisUECI</h4>
+                {% endif %}
             </div>
         </nav>
 

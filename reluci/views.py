@@ -15,6 +15,7 @@ def checklist_reluci(request):
     itens_abordagem = ItemAbordagem.objects.all()
 
     data = {
+        'titulo': 'Reluci',
         'itens_abordagem': itens_abordagem
     }
 
@@ -83,10 +84,14 @@ def ponto_controle_detail(request, pk):
 
     ponto_controle = get_object_or_404(PontoControle, pk=pk)
 
+    form = AnalisePontoControleForm(initial={'ponto_controle': ponto_controle, 'user': request.user})
+
     data = {
+        'titulo': 'Ponto de Controle ' + ponto_controle.get_codigo_completo(),
         'menu': 'active',
         'itens_abordagem': itens_abordagem,
-        'ponto_controle': ponto_controle
+        'ponto_controle': ponto_controle,
+        'form': form
     }
 
     return render(request, 'reluci/ponto-controle/ponto_controle_detail.html', data)

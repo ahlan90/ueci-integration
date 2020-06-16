@@ -131,6 +131,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CKEDITOR_CONFIGS = {
     'default': {
-        'width': '100%'
+        'width': '98.5%'
     }
 }
