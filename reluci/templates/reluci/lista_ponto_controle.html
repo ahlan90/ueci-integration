@@ -4,36 +4,30 @@
     <tr>
         <td class="px-3">
             <div class="d-flex justify-content-between">
-                <span class="pl-4 align-self-center">
-                    {{ ponto.get_codigo_completo }} - {{ ponto.nome }}
+                <div>
                     <button class="btn btn-sm" type="button"
                             data-toggle="collapse"
                             data-target="#collapsePt{{ ponto.get_codigo_completo|cut:'.' }}"
                             aria-expanded="false"
                             aria-controls="collapsePt{{ ponto.get_codigo_completo|cut:'.' }}">
-                    <i class="fa fa-arrow-down"></i>
+
+                        <span class="pl-4 align-self-center">
+                        {{ ponto.get_codigo_completo }} - {{ ponto.nome }}
+                        </span>
+
                     </button>
-                </span>
-                <div>
-                    <span class="badge badge-primary">FINALIZADO</span>
-                    <span class="badge badge-primary">NÃO ATENDE</span>
+
+                    {% if ponto.get_status_detail %}
+                    <span class="badge badge-warning">Não iniciado</span>
+                    {% endif %}
                 </div>
                 <div class="align-self-end">
-                    {% if not ponto.analises.all %}
                     <a type="button"
-                            class="btn btn-primary btn-sm btnModal"
-                            href="{% url 'ponto_controle_detail' ponto.pk %}">
-                        <i class="fa fa-plus"></i>
-                        Nova
+                       class="btn btn-primary btn-sm btnModal"
+                       href="{% url 'ponto_controle_detail' ponto.pk %}">
+                        <i class="fa fa-eye"></i>
+                        Analisar
                     </a>
-                    {% else %}
-                    <button type="button"
-                            class="btn btn-primary btn-sm btnModal js-update-analise-ponto-controle"
-                            data-url="{% url 'analise_ponto_controle_update' ponto.pk %}">
-                        <i class="fa fa-edit"></i>
-                        Atualizar
-                    </button>
-                    {% endif %}
                 </div>
             </div>
 

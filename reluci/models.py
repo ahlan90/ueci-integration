@@ -2,6 +2,12 @@ from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 from django.db import models
 
+STATUS = (
+    ('NAO_INICIADO', 'Não iniciado'),
+    ('EM_ANDAMENTO', 'Em andamento'),
+    ('AGUARDANDO', 'Aguardando'),
+    ('FINALIZADO', 'Finalizado'),
+)
 
 class ItemAbordagem(models.Model):
 
@@ -22,7 +28,11 @@ class ItemGestao(models.Model):
     nome = models.CharField(max_length=300)
     descricao = models.CharField(max_length=300, null=True, blank=True)
 
-    item = models.ForeignKey(ItemAbordagem, on_delete=models.CASCADE, null=True, blank=True, related_name='itens_gestao')
+    item = models.ForeignKey(ItemAbordagem,
+                             on_delete=models.CASCADE, null=True,
+                             blank=True, related_name='itens_gestao')
+
+    percentual = models.IntegerField(default=0)
 
     def __str__(self):
         return self.get_codigo_completo() + " - " + self.nome
@@ -56,6 +66,13 @@ class PontoControle(models.Model):
         else:
             return self.codigo
 
+    def get_status_detail(self):
+        analise: AnalisePontoControle = self.analises.last()
+        if analise:
+            return analise.status
+        else:
+            return STATUS
+
     class Meta:
         ordering = ('codigo',)
 
@@ -77,12 +94,6 @@ class AnalisePontoControle(models.Model):
 
     classificacao = models.CharField(max_length=30, choices=CLASSIFICACOES, null=True, blank=True)
 
-    STATUS = (
-        ('NAO_INICIADO', 'Não iniciado'),
-        ('EM_ANDAMENTO', 'Em andamento'),
-        ('AGUARDANDO', 'Aguardando'),
-        ('FINALIZADO', 'Finalizado'),
-    )
     status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
 
     def __str__(self):

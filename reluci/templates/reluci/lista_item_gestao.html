@@ -10,11 +10,13 @@
 
         </h2>
     </div>
-    <div class="w-25">
-        <div class="progress">
-            <div class="progress-bar bg-success" role="progressbar" style="width: 25%"
-                 aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="w-25 align-self-center progress">
+        <div class="progress-bar bg-success" role="progressbar"
+             style="width: {{ item_gestao.percentual }}%;"
+             aria-valuenow="{{ item_gestao.percentual }}" aria-valuemin="0"
+             aria-valuemax="100">{{ item_gestao.percentual }}%
         </div>
+
     </div>
 </div>
 
