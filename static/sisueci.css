@@ -152,6 +152,7 @@ a.article, a.article:hover {
     padding: 20px;
     min-height: 100vh;
     transition: all 0.3s;
+    background-color: #F3F3F3;
 }
 
 #sidebarCollapse {
