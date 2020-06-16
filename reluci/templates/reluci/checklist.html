@@ -4,19 +4,20 @@
 
 {% block content %}
 
-<h3 class="text-center mb-4">Checklist RELUCI</h3>
+<div class="offset-2 col-8">
+    <h3 class="text-center mb-4">Checklist RELUCI</h3>
 
-{% include 'reluci/lista_item_abordagem.html' %}
+    {% include 'reluci/lista_item_abordagem.html' %}
 
-<!-- MODAL -->
-<div class="modal fade" id="modal-checklist">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+    <!-- MODAL -->
+    <div class="modal fade" id="modal-checklist">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
 
+            </div>
         </div>
     </div>
 </div>
-
 {% endblock content %}
 
 {% block scripts %}

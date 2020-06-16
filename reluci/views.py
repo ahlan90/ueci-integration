@@ -75,3 +75,19 @@ def analise_ponto_controle_update(request, pk):
         form = AnalisePontoControleForm(instance=analise)
     return save_ponto_controle_form(request, form, pk, 'reluci/ponto-controle/atualiza_ponto_controle_modal.html')
 
+
+@login_required
+def ponto_controle_detail(request, pk):
+
+    itens_abordagem = ItemAbordagem.objects.all()
+
+    ponto_controle = get_object_or_404(PontoControle, pk=pk)
+
+    data = {
+        'menu': 'active',
+        'itens_abordagem': itens_abordagem,
+        'ponto_controle': ponto_controle
+    }
+
+    return render(request, 'reluci/ponto-controle/ponto_controle_detail.html', data)
+

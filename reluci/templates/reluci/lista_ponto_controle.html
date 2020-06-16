@@ -20,12 +20,12 @@
                 </div>
                 <div class="align-self-end">
                     {% if not ponto.analises.all %}
-                    <button type="button"
-                            class="btn btn-primary btn-sm btnModal js-create-analise-ponto-controle"
-                            data-url="{% url 'analise_ponto_controle_create' ponto.pk %}">
+                    <a type="button"
+                            class="btn btn-primary btn-sm btnModal"
+                            href="{% url 'ponto_controle_detail' ponto.pk %}">
                         <i class="fa fa-plus"></i>
                         Nova
-                    </button>
+                    </a>
                     {% else %}
                     <button type="button"
                             class="btn btn-primary btn-sm btnModal js-update-analise-ponto-controle"

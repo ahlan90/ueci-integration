@@ -5,7 +5,7 @@ from .forms import *
 from .processa_dados import processa_arquivo_despesas_liquidadas_exercicio
 
 def index(request):
-    return render(request, 'menu.html', {})
+    return render(request, 'index.html', {})
 
 def despesa_liquidada_upload(request):
 
