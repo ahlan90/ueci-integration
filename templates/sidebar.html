@@ -1,5 +1,5 @@
 <!-- Sidebar Holder -->
-<nav id="sidebar" class="active">
+<nav id="sidebar" >
     <div class="sidebar-header">
         <h3>UECI Integrador</h3>
     </div>
@@ -8,12 +8,18 @@
         <p>Pontos de Controle</p>
         {% for item_abordagem in itens_abordagem %}
         {% for item_gestao in item_abordagem.itens_gestao.all %}
-        {% for ponto in item_gestao.pontos.all %}
-
         <li>
-            <a href="{% url 'ponto_controle_detail' ponto.pk %}">{{ ponto.get_codigo_completo }}</a>
+            <a href="#homeSubmenu{{item_gestao.id}}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                {{ item_gestao.get_codigo_completo }}
+            </a>
+            {% for ponto in item_gestao.pontos.all %}
+            <ul class="collapse list-unstyled" id="homeSubmenu{{item_gestao.id}}">
+                <li>
+                    <a href="{% url 'ponto_controle_detail' ponto.pk %}">{{ ponto.get_codigo_completo }}</a>
+                </li>
+            </ul>
+            {% endfor %}
         </li>
-        {% endfor %}
         {% endfor %}
         {% endfor %}
         <!--        <li >-->
@@ -28,7 +34,10 @@
 
     <ul class="list-unstyled CTAs">
         <li>
-            <a href="/" class="download">Home</a>
+            <a href="{% url 'checklist_reluci' %}" class="download">
+                <i class="fa fa-angle-left"></i>
+                 Reluci
+            </a>
         </li>
     </ul>
 </nav>
