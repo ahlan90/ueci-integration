@@ -32,6 +32,10 @@ class FolhaTrabalhoPrintView(WeasyTemplateResponseMixin, FolhaTrabalhoView):
     pdf_filename = 'folha-trabalho.pdf'
 
 
+def teste_print(request):
+
+    return render(request, 'reluci/folha_trabalho_pdf.html', {})
+
 def checklist_reluci(request):
 
     itens_abordagem = ItemAbordagem.objects.all()
