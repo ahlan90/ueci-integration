@@ -6,22 +6,23 @@
 
 <div class="container-fluid">
 
-    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Home</a>
-  </li>
-  <li class="nav-item" role="presentation">
-    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</a>
-  </li>
-  <li class="nav-item" role="presentation">
-    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</a>
-  </li>
-</ul>
-<div class="tab-content" id="pills-tabContent">
-  <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">...</div>
-  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
-  <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
-</div>
+
+    <!--    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">-->
+    <!--        {% for sub_ponto in ponto_controle.sub_pontos_controle.all %}-->
+    <!--        <li class="nav-item border rounded mr-2" role="presentation">-->
+    <!--            <a class="nav-link" id="pills-{{ sub_ponto.get_codigo_completo|cut:'.' }}-tab" data-toggle="pill" href="#pills-{{ sub_ponto.get_codigo_completo|cut:'.' }}" role="tab"-->
+    <!--               aria-controls="pills-{{ sub_ponto.get_codigo_completo|cut:'.' }}" aria-selected="true">{{ sub_ponto.get_codigo_completo }}</a>-->
+    <!--        </li>-->
+    <!--        {% endfor %}-->
+    <!--    </ul>-->
+    <!--    <div class="tab-content" id="pills-tabContent">-->
+
+    <!--        {% for sub_ponto in ponto_controle.sub_pontos_controle.all %}-->
+    <!--        <div class="tab-pane" id="pills-{{ sub_ponto.get_codigo_completo|cut:'.' }}" role="tabpanel" aria-labelledby="pills-{{ sub_ponto.get_codigo_completo|cut:'.' }}-tab">-->
+    <!--            {{ sub_ponto.descricao }}-->
+    <!--        </div>-->
+    <!--        {% endfor %}-->
+    <!--    </div>-->
 
     <div class="row my-4">
 
@@ -29,6 +30,22 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="header-title mb-3">Tarefas</h4>
+
+                    <div class="table-responsive">
+                        <ul>
+                            {% for tarefa in ponto_controle.tarefas.all %}
+                            <li>{{ tarefa.descricao }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mb-3">Histórico de Análise</h4>
 
                     <div class="table-responsive">
                         <table class="table mb-0">
@@ -40,11 +57,11 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for tarefa in ponto_controle.tarefas.all %}
+                            {% for analise in ponto_controle.analises.all %}
                             <tr>
-                                <td>{{ tarefa.codigo }}</td>
-                                <td>{{ tarefa.descricao }}</td>
-                                <td>{{ tarefa.status }}</td>
+                                <td>{{ analise.id }}</td>
+                                <td>{{ analise.descricao }}</td>
+                                <td>{{ analise.status }}</td>
                             </tr>
                             {% endfor %}
 
@@ -55,6 +72,7 @@
             </div>
         </div>
 
+
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-body">
@@ -62,10 +80,9 @@
 
                     <div class="table-responsive">
                         <form method="post" action="{% url 'analise_ponto_controle_create' ponto_controle.id %}">
-
-                        {% load crispy_forms_tags %}
-                        {% csrf_token %}
-                        {{ form|crispy }}
+                            {% load crispy_forms_tags %}
+                            {% csrf_token %}
+                            {{ form|crispy }}
                         </form>
                     </div>
                 </div>

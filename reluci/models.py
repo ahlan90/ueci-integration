@@ -216,6 +216,7 @@ class Atividade(models.Model):
 
 
 class ObservacaoAtividade(models.Model):
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     atividade = models.ForeignKey(Atividade, on_delete=models.CASCADE)
     observacao = RichTextField()
