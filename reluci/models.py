@@ -9,6 +9,7 @@ STATUS = (
     ('FINALIZADO', 'Finalizado'),
 )
 
+
 class ItemAbordagem(models.Model):
 
     codigo = models.CharField(max_length=50)
@@ -178,6 +179,9 @@ class Tarefa(models.Model):
             if self.sub_ponto_controle:
                 return self.sub_ponto_controle.get_codigo_completo() + '.' + self.codigo
             return self.codigo
+
+    def __str__(self):
+        return self.descricao
 
     class Meta:
         ordering = ('codigo',)
