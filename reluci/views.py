@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Sin
 from django.http import JsonResponse
@@ -5,9 +6,30 @@ from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from django.template.loader import render_to_string
+from django.views.generic import DetailView
+from django_weasyprint import WeasyTemplateResponseMixin
 
 from reluci.forms import AnalisePontoControleForm
 from reluci.models import ItemAbordagem, PontoControle, AnalisePontoControle
+
+
+class FolhaTrabalhoView(DetailView):
+
+    model = PontoControle
+    template_name = 'reluci/folha_trabalho_pdf.html'
+
+
+class FolhaTrabalhoPrintView(WeasyTemplateResponseMixin, FolhaTrabalhoView):
+
+    # output of MyModelView rendered as PDF with hardcoded CSS
+    pdf_stylesheets = [
+        settings.STATIC_ROOT + '/apps/folha-trabalho.css',
+    ]
+    # show pdf in-line (default: True, show download dialog)
+    pdf_attachment = False
+
+    # suggested filename (is required for attachment!)
+    pdf_filename = 'folha-trabalho.pdf'
 
 
 def checklist_reluci(request):
