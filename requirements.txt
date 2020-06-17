@@ -58,7 +58,7 @@ Flask-WTF==0.14.2
 gunicorn==20.0.4
 hidpidaemon==18.4.5
 html5lib==1.0.1
-httplib2==0.14.0
+httplib2==0.18.0
 idna==2.8
 itsdangerous==1.1.0
 jdcal==1.4.1
