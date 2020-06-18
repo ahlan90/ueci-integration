@@ -17,26 +17,6 @@
 
     <div class="row mb-4">
 
-        <div class="col-xl-6">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="header-title mb-3">Tarefas</h4>
-
-                    <div class="table-responsive">
-                        <ul>
-                            {% for tarefa in ponto_controle.tarefas.all %}
-                            <li>{{ tarefa.descricao }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="row mb-4">
-
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
@@ -72,7 +52,42 @@
                 </div>
             </div>
         </div>
+
     </div>
+
+    <div class="row mb-4">
+
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mb-3">Tarefas</h4>
+
+                    <div class="table-responsive">
+                        <ul>
+                            {% for tarefa in ponto_controle.tarefas.all %}
+                            <li class="mb-2">{{ tarefa.descricao }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mb-3">Arquivos</h4>
+
+                    <div class="table-responsive">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 
 </div>
 
