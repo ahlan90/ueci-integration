@@ -31,6 +31,7 @@
 
 
 
+
     </style>
 
     <link href="{% static 'sisueci.css' %}" rel="stylesheet">
@@ -70,9 +71,18 @@
         {% block content %}
         {% endblock content %}
 
+
     </div>
 </div>
 
+<!-- MODAL -->
+<div class="modal fade" id="modal-ponto-controle">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
 
 {% block scripts %}
 <script
@@ -101,6 +111,7 @@
             $(this).toggleClass('active');
         });
     });
+
 
 
 </script>

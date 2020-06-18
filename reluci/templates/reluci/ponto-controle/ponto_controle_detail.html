@@ -6,23 +6,6 @@
 
 <div class="container-fluid">
 
-
-    <!--    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">-->
-    <!--        {% for sub_ponto in ponto_controle.sub_pontos_controle.all %}-->
-    <!--        <li class="nav-item border rounded mr-2" role="presentation">-->
-    <!--            <a class="nav-link" id="pills-{{ sub_ponto.get_codigo_completo|cut:'.' }}-tab" data-toggle="pill" href="#pills-{{ sub_ponto.get_codigo_completo|cut:'.' }}" role="tab"-->
-    <!--               aria-controls="pills-{{ sub_ponto.get_codigo_completo|cut:'.' }}" aria-selected="true">{{ sub_ponto.get_codigo_completo }}</a>-->
-    <!--        </li>-->
-    <!--        {% endfor %}-->
-    <!--    </ul>-->
-    <!--    <div class="tab-content" id="pills-tabContent">-->
-
-    <!--        {% for sub_ponto in ponto_controle.sub_pontos_controle.all %}-->
-    <!--        <div class="tab-pane" id="pills-{{ sub_ponto.get_codigo_completo|cut:'.' }}" role="tabpanel" aria-labelledby="pills-{{ sub_ponto.get_codigo_completo|cut:'.' }}-tab">-->
-    <!--            {{ sub_ponto.descricao }}-->
-    <!--        </div>-->
-    <!--        {% endfor %}-->
-    <!--    </div>-->
     <div class="row justify-content-end mr-1 mb-2">
         <a class="btn btn-warning btn-sm"
            target="_blank"
@@ -31,6 +14,7 @@
             Imprimir
         </a>
     </div>
+
     <div class="row mb-4">
 
         <div class="col-xl-6">
@@ -49,115 +33,57 @@
             </div>
         </div>
 
-        <div class="col-xl-6">
+    </div>
+
+    <div class="row mb-4">
+
+        <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                    <h4 class="header-title mb-3">Análise</h4>
-                    <ul class="nav nav-pills" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                               aria-controls="home" aria-selected="true">
-                                <i class="fa fa-list"></i>
-                                Histórico
-                            </a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                               aria-controls="profile" aria-selected="false">
+                        <h4 class="header-title mb-3">Análise</h4>
+                        <div>
+                            <button class="btn btn-primary btn-sm js-create-analise-ponto-controle"
+                                    type="button"
+                                    data-url="{% url 'analise_ponto_controle_create' ponto_controle.id %}">
                                 <i class="fa fa-plus"></i>
                                 Nova
-                            </a>
-                        </li>
-                    </ul>
-                    </div>
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            <div class="table-responsive">
-                                <table class="table mb-0 mt-2">
-                                    <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Tarefa</th>
-                                        <th>Status</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for analise in ponto_controle.analises.all %}
-                                    <tr>
-                                        <td>{{ analise.id }}</td>
-                                        <td>{{ analise.descricao }}</td>
-                                        <td>{{ analise.status }}</td>
-                                    </tr>
-                                    {% endfor %}
-
-                                    </tbody>
-                                </table>
-                            </div>
+                            </button>
                         </div>
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            <form method="post" action="{% url 'analise_ponto_controle_create' ponto_controle.id %}">
-                                {% load crispy_forms_tags %}
-                                {% csrf_token %}
-                                {{ form|crispy }}
-                            </form>
-                        </div>
-
                     </div>
+                    <div class="table-responsive m-t-40">
+                        <table cellpadding="0" cellspacing="0" border="0" id="analise-ponto-controle-table"
+                               class="display nowrap table table-hover table-striped table-bordered dataTable">
+                            <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Usuário</th>
+                                <th>Status</th>
+                                <th>Classificação</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% include 'reluci/ponto-controle/lista_analise_ponto_controle_parcial.html' %}
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
             </div>
         </div>
-
-        <!--        <div class="col-xl-6">-->
-        <!--            <div class="card">-->
-        <!--                <div class="card-body">-->
-        <!--                    <h4 class="header-title mb-3">Histórico de Análise</h4>-->
-
-        <!--                    <div class="table-responsive">-->
-        <!--                        <table class="table mb-0">-->
-        <!--                            <thead>-->
-        <!--                            <tr>-->
-        <!--                                <th>#</th>-->
-        <!--                                <th>Tarefa</th>-->
-        <!--                                <th>Status</th>-->
-        <!--                            </tr>-->
-        <!--                            </thead>-->
-        <!--                            <tbody>-->
-        <!--                            {% for analise in ponto_controle.analises.all %}-->
-        <!--                            <tr>-->
-        <!--                                <td>{{ analise.id }}</td>-->
-        <!--                                <td>{{ analise.descricao }}</td>-->
-        <!--                                <td>{{ analise.status }}</td>-->
-        <!--                            </tr>-->
-        <!--                            {% endfor %}-->
-
-        <!--                            </tbody>-->
-        <!--                        </table>-->
-        <!--                    </div>-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
-
-
-        <!--        <div class="col-xl-6">-->
-        <!--            <div class="card">-->
-        <!--                <div class="card-body">-->
-        <!--                    <h4 class="header-title mb-3">Análise</h4>-->
-
-        <!--                    <div class="table-responsive">-->
-        <!--                        <form method="post" action="{% url 'analise_ponto_controle_create' ponto_controle.id %}">-->
-        <!--                            {% load crispy_forms_tags %}-->
-        <!--                            {% csrf_token %}-->
-        <!--                            {{ form|crispy }}-->
-        <!--                        </form>-->
-        <!--                    </div>-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
-
-
     </div>
 
 </div>
 
+
 {% endblock content %}
+
+
+{% block scripts %}
+
+{{ block.super }}
+
+<script src="{% static 'apps/reluci/ponto-controle.js' %}" type="text/javascript" charset="utf-8"></script>
+
+{% endblock %}

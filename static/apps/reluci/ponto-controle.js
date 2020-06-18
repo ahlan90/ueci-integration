@@ -7,11 +7,11 @@ $(function () {
       type: 'get',
       dataType: 'json',
       beforeSend: function () {
-        $("#modal-checklist .modal-content").html("");
-        $("#modal-checklist").modal("show");
+        $("#modal-ponto-controle .modal-content").html("");
+        $("#modal-ponto-controle").modal("show");
       },
       success: function (data) {
-        $("#modal-checklist .modal-content").html(data.html_form);
+        $("#modal-ponto-controle .modal-content").html(data.html_form);
       }
     });
   };
@@ -25,10 +25,12 @@ $(function () {
       dataType: 'json',
       success: function (data) {
         if (data.form_is_valid) {
-          $("#modal-checklist").modal("hide");
+          console.log(data);
+          $("#analise-ponto-controle-table tbody").html(data.html_analise_ponto_controle_list);
+          $("#modal-ponto-controle").modal("hide");
         }
         else {
-          $("#modal-checklist .modal-content").html(data.html_form);
+          $("#modal-ponto-controle .modal-content").html(data.html_form);
         }
       }
     });
@@ -40,15 +42,15 @@ $(function () {
 
   // Create ponto-controle
   $(".js-create-analise-ponto-controle").click(loadForm);
-  $("#modal-checklist").on("submit", ".js-ponto-controle-create-form", saveForm);
+  $("#modal-ponto-controle").on("submit", ".js-ponto-controle-create-form", saveForm);
 
   // Update ponto-controle
   $(".js-update-analise-ponto-controle").click(loadForm);
-  $("#modal-checklist").on("submit", ".js-ponto-controle-update-form", saveForm);
+  $("#modal-ponto-controle").on("submit", ".js-ponto-controle-update-form", saveForm);
 
   // Delete ponto-controle
   $("#ponto-controle-table").on("click", ".js-delete-ponto-controle", loadForm);
-  $("#modal-checklist").on("submit", ".js-ponto-controle-delete-form", saveForm);
+  $("#modal-ponto-controle").on("submit", ".js-ponto-controle-delete-form", saveForm);
 
 });
 

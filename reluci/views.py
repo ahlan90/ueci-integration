@@ -32,10 +32,6 @@ class FolhaTrabalhoPrintView(WeasyTemplateResponseMixin, FolhaTrabalhoView):
     pdf_filename = 'folha-trabalho.pdf'
 
 
-def teste_print(request):
-
-    return render(request, 'reluci/folha_trabalho_pdf.html', {})
-
 def checklist_reluci(request):
 
     itens_abordagem = ItemAbordagem.objects.all()
@@ -61,14 +57,20 @@ def relato_ponto_controle(request, pk):
 
 
 @login_required
-def save_ponto_controle_form(request, form, pk, template_name):
+def save_analise_ponto_controle_form(request, form, pk, template_name):
     data = dict()
     if request.method == 'POST':
         if form.is_valid():
             form.save()
             data['form_is_valid'] = True
+            ponto_controle = get_object_or_404(PontoControle, pk=pk)
+            data['html_analise_ponto_controle_list'] = render_to_string(
+                'reluci/ponto-controle/lista_analise_ponto_controle_parcial.html', {
+                'ponto_controle': ponto_controle
+            })
         else:
             data['form_is_valid'] = False
+
     context = {
         'form': form,
         'ponto_controle_id': pk,
@@ -81,26 +83,23 @@ def save_ponto_controle_form(request, form, pk, template_name):
 def analise_ponto_controle_create(request, pk):
 
     ponto_controle = get_object_or_404(PontoControle, pk=pk)
-    data = {
-        'ponto_controle_id': pk
-    }
+
     if request.method == 'POST':
         form = AnalisePontoControleForm(request.POST or None)
     else:
         form = AnalisePontoControleForm(initial={'ponto_controle': ponto_controle, 'user': request.user})
 
-    return save_ponto_controle_form(request, form, pk, 'reluci/ponto-controle/cria_ponto_controle_modal.html')
+    return save_analise_ponto_controle_form(request, form, pk, 'reluci/ponto-controle/cria_ponto_controle_modal.html')
 
 
 @login_required
 def analise_ponto_controle_update(request, pk):
-    ponto_controle = get_object_or_404(PontoControle, pk=pk)
-    analise = AnalisePontoControle.objects.filter(ponto_controle=ponto_controle).order_by('criado')[0]
+    analise_ponto_controle = get_object_or_404(AnalisePontoControle, pk=pk)
     if request.method == 'POST':
-        form = AnalisePontoControleForm(request.POST, instance=analise)
+        form = AnalisePontoControleForm(request.POST, instance=analise_ponto_controle)
     else:
-        form = AnalisePontoControleForm(instance=analise)
-    return save_ponto_controle_form(request, form, pk, 'reluci/ponto-controle/atualiza_ponto_controle_modal.html')
+        form = AnalisePontoControleForm(instance=analise_ponto_controle)
+    return save_analise_ponto_controle_form(request, form, pk, 'reluci/ponto-controle/atualiza_ponto_controle_modal.html')
 
 
 @login_required

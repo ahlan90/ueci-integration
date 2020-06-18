@@ -2,7 +2,7 @@
 
 {% block content_modal %}
 
-<form method="post" action="{% url 'analise_ponto_controle_update' form.instance.ponto_controle.pk %}" class="js-ponto-controle-update-form">
+<form method="post" action="{% url 'analise_ponto_controle_update' form.instance.ponto_controle.pk %}" class="js-analise-ponto-controle-update-form">
     {% csrf_token %}
     <div class="modal-header">
         <h5 class="modal-title">Análise Ponto Controle</h5>

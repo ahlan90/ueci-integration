@@ -10,5 +10,4 @@ urlpatterns = [
     path('ponto-controle/<int:pk>', views.ponto_controle_detail, name='ponto_controle_detail'),
     path('ponto-controle/atualizar/<int:pk>', views.analise_ponto_controle_update, name='analise_ponto_controle_update'),
     path('folha-trabalho/<int:pk>', FolhaTrabalhoPrintView.as_view(), name='folha_trabalho_pdf'),
-    path('teste', views.teste_print),
 ]
