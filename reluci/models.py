@@ -88,14 +88,13 @@ class AnalisePontoControle(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     ponto_controle = models.ForeignKey(PontoControle, on_delete=models.CASCADE, related_name='analises')
-    analise = RichTextField(null=True, blank=True)
+    analise = RichTextField("Análise", null=True, blank=True)
 
     criado = models.DateTimeField(auto_now_add=True)
     alterado = models.DateTimeField(auto_now=True)
 
-    classificacao = models.CharField(max_length=30, choices=CLASSIFICACOES, default='NAO_AVALIADO')
-
     status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
+    classificacao = models.CharField("Classificação", max_length=30, choices=CLASSIFICACOES, default='NAO_AVALIADO')
 
     def __str__(self):
         return 'Ponto de Controle: ' + self.ponto_controle.get_codigo_completo() + ' - Usuário: ' + str(self.user)

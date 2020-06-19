@@ -6,11 +6,7 @@
         {{ analise.get_status_display }}
     </td>
     <td>
-        {% if analise.classificacao %}
         {{ analise.get_classificacao_display }}
-        {% else %}
-        Não Avaliado
-        {% endif %}
     </td>
     <td>
         <button class="btn btn-success btn-sm js-update-analise-ponto-controle"
