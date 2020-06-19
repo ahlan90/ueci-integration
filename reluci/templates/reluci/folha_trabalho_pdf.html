@@ -18,29 +18,28 @@
 </table>
 <p style="text-align: center;"><span style="font-size: 12pt;"><strong>RELAT&Oacute;RIO DE ATIVIDADES REALIZADAS PELA UNIDADE DE CONTROLE INTERNO</strong></span>
 </p>
-<p><strong>Unidade Gestora Emitente:</strong> [unidade gestora da respectiva Presta&ccedil;&atilde;o de Contas
-    Anual]<br/><strong>C&oacute;digo da Unidade Gestora Emitente:</strong> [c&oacute;digo da unidade
-    gestora]<br/><strong>Exerc&iacute;cio:</strong> [exerc&iacute;cio que se refere a presta&ccedil;&atilde;o de contas]
+<p><strong>Unidade Gestora Emitente:</strong> {{ ug }}
+    <br/><strong>C&oacute;digo da Unidade Gestora Emitente:</strong> {{ codigo_ug }}
+    <br/><strong>Exerc&iacute;cio:</strong> {{ exercicio }}
 </p>
 <table style="border-collapse: collapse; width: 100%; height: 126px;" class="tabela-folha">
     <tbody>
     <tr >
         <td >
             <p><strong>Folha de Trabalho n&ordm;:</strong></p>
-            <p>&nbsp;</p>
+            <p>&nbsp;{{ numero_folha_trabalho }}</p>
         </td>
         <td >
             <p><strong>Data da conclus&atilde;o:</strong></p>
-            <p>&nbsp;</p>
+            <p>&nbsp;{{ data_conclusao|date:'d/m/y' }}</p>
         </td>
     </tr>
-    <tr style="height: 18px;">
-        <td style="width: 43.0883%; height: 18px;">
+    <tr>
+        <td style="width: 43.0883%;">
             <p><strong>Ponto de Controle n&ordm;:</strong></p>
-            <p>[informe o n&ordm; do ponto de controle em an&aacute;lise]<br/>[descri&ccedil;&atilde;o do ponto de
-                controle em an&aacute;lise]</p>
+            <p>{{ object.get_codigo_completo }}</p>
         </td>
-        <td style="width: 24.522%; height: 18px;">
+        <td style="width: 24.522%;">
             <p><strong>Base Legal:</strong></p>
             <p>[descri&ccedil;&atilde;o da base legal do ponto de controle em an&aacute;lise]</p>
         </td>
@@ -57,15 +56,16 @@
             <p>&nbsp;</p>
         </td>
     </tr>
-    <tr style="height: 18px;">
-        <td style="width: 43.0883%; height: 18px;" colspan="2">
+    <tr>
+        <td colspan="2">
             <p><strong>S&iacute;ntese das informa&ccedil;&otilde;es obtidas / Conclus&otilde;es:</strong></p>
-            <p>[Resumir os crit&eacute;rios de tamanho e sele&ccedil;&atilde;o da amostra e os procedimentos aplicados
-                (an&aacute;lise<br/>documental, concilia&ccedil;&atilde;o, rec&aacute;lculo, revis&atilde;o anal&iacute;tica),
-                conforme Manual, e as conclus&otilde;es,<br/>classificando nas hip&oacute;teses sugeridas: 1-sem
-                inconsist&ecirc;ncia; 2- com inconsist&ecirc;ncia<br/>justificada; 3- com inconsist&ecirc;ncia em
-                montante irrelevante; 4- com inconsist&ecirc;ncia em<br/>montante relevante, sugerindo ressalva].</p>
-            <p>&nbsp;</p>
+            {% for analise in object.analises.all %}
+            <br>
+            <p style="padding-left:2em"><strong>Data:</strong>{{ analise.criado | date:'d/m/Y' }}</p>
+            <div style="padding-left:5em; padding-top: 1em;">
+                {{ analise.analise|safe }}
+            </div>
+            {% endfor %}
         </td>
     </tr>
     <tr style="height: 18px;">

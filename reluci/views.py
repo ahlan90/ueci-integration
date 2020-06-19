@@ -1,3 +1,6 @@
+import datetime
+from datetime import datetime
+
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Sin
@@ -17,6 +20,16 @@ class FolhaTrabalhoView(DetailView):
 
     model = PontoControle
     template_name = 'reluci/folha_trabalho_pdf.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ug'] = 'NOME DA UG DA SESP'
+        context['codigo_ug'] = 'NOME DA UG DA SESP'
+        context['exercicio'] = '2020'
+        context['numero_folha_trabalho'] = '1'
+        context['data_conclusao'] = datetime.now()
+
+        return context
 
 
 class FolhaTrabalhoPrintView(WeasyTemplateResponseMixin, FolhaTrabalhoView):
