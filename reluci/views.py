@@ -39,7 +39,7 @@ class FolhaTrabalhoPrintView(WeasyTemplateResponseMixin, FolhaTrabalhoView):
         settings.STATIC_ROOT + '/apps/folha-trabalho.css',
     ]
     # show pdf in-line (default: True, show download dialog)
-    pdf_attachment = False
+    pdf_attachment = True
 
     # suggested filename (is required for attachment!)
     pdf_filename = 'folha-trabalho.pdf'
