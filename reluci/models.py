@@ -9,6 +9,12 @@ STATUS = (
     ('FINALIZADO', 'Finalizado'),
 )
 
+CLASSIFICACOES = (
+    ('NAO_AVALIADO', 'Não avaliado'),
+    ('ATENDE', 'Atende'),
+    ('ATENDE_PARCIALMENTE', 'Atende parcialmente'),
+    ('NAO_ATENDE', 'Não atende'),
+)
 
 class ItemAbordagem(models.Model):
 
@@ -87,13 +93,7 @@ class AnalisePontoControle(models.Model):
     criado = models.DateTimeField(auto_now_add=True)
     alterado = models.DateTimeField(auto_now=True)
 
-    CLASSIFICACOES = (
-        ('ATENDE', 'Atende'),
-        ('ATENDE_PARCIALMENTE', 'Atende parcialmente'),
-        ('NAO_ATENDE', 'Não atende'),
-    )
-
-    classificacao = models.CharField(max_length=30, choices=CLASSIFICACOES, null=True, blank=True)
+    classificacao = models.CharField(max_length=30, choices=CLASSIFICACOES, default='NAO_AVALIADO')
 
     status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
 
@@ -143,12 +143,7 @@ class AnaliseSubPontoControle(models.Model):
     )
     status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
 
-    CLASSIFICACOES = (
-        ('ATENDE', 'Atende'),
-        ('ATENDE_PARCIALMENTE', 'Atende parcialmente'),
-        ('NAO_ATENDE', 'Não atende'),
-    )
-    classificacao = models.CharField(max_length=30, choices=CLASSIFICACOES, null=True, blank=True)
+    classificacao = models.CharField(max_length=30, choices=CLASSIFICACOES, default='NAO_AVALIADO')
 
 
 class Tarefa(models.Model):
