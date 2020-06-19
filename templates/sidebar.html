@@ -1,10 +1,24 @@
 <!-- Sidebar Holder -->
-<nav id="sidebar">
+<nav id="sidebar" class="{{ menu }}">
     <div class="sidebar-header">
         <h3>UECI Integrador</h3>
     </div>
 
     <ul class="list-unstyled components">
+        <li>
+            <a href="/" >
+                <i class="fa fa-home mr-2"></i>
+                Home
+            </a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'checklist_reluci' %}active{% endif %}">
+            <a href="{% url 'checklist_reluci' %}">
+                <i class="fa fa-list mr-2"></i>
+                Reluci
+            </a>
+        </li>
+    </ul>
+    <ul class="list-unstyled components pt-0">
         <p>Pontos de Controle</p>
         {% for item_abordagem in itens_abordagem %}
         {% for item_gestao in item_abordagem.itens_gestao.all %}
@@ -15,7 +29,7 @@
             </a>
             {% for ponto in item_gestao.pontos.all %}
             <ul class="collapse list-unstyled" id="homeSubmenu{{item_gestao.id}}">
-                <li >
+                <li>
                     <a href="{% url 'ponto_controle_detail' ponto.pk %}">
                         {{ ponto.get_codigo_completo }}
                     </a>
@@ -25,14 +39,5 @@
         </li>
         {% endfor %}
         {% endfor %}
-    </ul>
-
-    <ul class="list-unstyled CTAs">
-        <li>
-            <a href="{% url 'checklist_reluci' %}" class="download">
-                <i class="fa fa-angle-left"></i>
-                Reluci
-            </a>
-        </li>
     </ul>
 </nav>

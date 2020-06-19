@@ -38,7 +38,9 @@ def checklist_reluci(request):
 
     data = {
         'titulo': 'Reluci',
-        'itens_abordagem': itens_abordagem
+        'itens_abordagem': itens_abordagem,
+        'menu': 'active',
+        'sidebar': 'active'
     }
 
     return render(request, 'reluci/checklist.html', data)
@@ -113,10 +115,10 @@ def ponto_controle_detail(request, pk):
 
     data = {
         'titulo': 'Ponto de Controle ' + ponto_controle.get_codigo_completo(),
-        'menu': 'active',
         'itens_abordagem': itens_abordagem,
         'ponto_controle': ponto_controle,
-        'form': form
+        'form': form,
+        'sidebar': 'active'
     }
 
     return render(request, 'reluci/ponto-controle/ponto_controle_detail.html', data)

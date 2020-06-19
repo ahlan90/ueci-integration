@@ -44,15 +44,15 @@
 
 <div class="wrapper">
 
-    {% if menu %}
+    {% if sidebar %}
     {% include 'sidebar.html' %}
     {% endif %}
     <!-- Page Content Holder -->
     <div id="content">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                {% if menu %}
-                <button type="button" id="sidebarCollapse" class="navbar-btn bg-transparent">
+                {% if sidebar %}
+                <button type="button" id="sidebarCollapse" class="navbar-btn bg-transparent {{ menu }}">
                     <span></span>
                     <span></span>
                     <span></span>
