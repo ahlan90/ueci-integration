@@ -100,6 +100,8 @@ class AnalisePontoControle(models.Model):
     def __str__(self):
         return 'Ponto de Controle: ' + self.ponto_controle.get_codigo_completo() + ' - Usuário: ' + str(self.user)
 
+    class Meta:
+        ordering = ('-criado',)
 
 class SubPontoControle(models.Model):
 
