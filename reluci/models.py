@@ -31,14 +31,13 @@ class ItemAbordagem(models.Model):
 
 class ItemGestao(models.Model):
 
-    codigo = models.CharField(max_length=50)
-    nome = models.CharField(max_length=300)
-    descricao = models.CharField(max_length=300, null=True, blank=True)
-
     item = models.ForeignKey(ItemAbordagem,
                              on_delete=models.CASCADE, null=True,
                              blank=True, related_name='itens_gestao')
 
+    codigo = models.CharField(max_length=50)
+    nome = models.CharField(max_length=300)
+    descricao = models.CharField(max_length=300, null=True, blank=True)
     percentual = models.IntegerField(default=0)
 
     def __str__(self):
@@ -56,13 +55,12 @@ class ItemGestao(models.Model):
 
 class PontoControle(models.Model):
 
+    ponto_controle_relacionado = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
+    grupo = models.ForeignKey(ItemGestao, on_delete=models.CASCADE, related_name='pontos')
+
     codigo = models.CharField(max_length=50)
     nome = models.CharField(max_length=300)
     descricao = models.CharField(max_length=1000, null=True, blank=True)
-
-    ponto_controle_relacionado = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
-
-    grupo = models.ForeignKey(ItemGestao, on_delete=models.CASCADE, related_name='pontos')
 
     def __str__(self):
         return self.get_codigo_completo() + " - " + self.nome
@@ -88,11 +86,10 @@ class AnalisePontoControle(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     ponto_controle = models.ForeignKey(PontoControle, on_delete=models.CASCADE, related_name='analises')
-    analise = RichTextField("Análise", null=True, blank=True)
 
+    analise = RichTextField("Análise", null=True, blank=True)
     criado = models.DateTimeField(auto_now_add=True)
     alterado = models.DateTimeField(auto_now=True)
-
     status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
     classificacao = models.CharField("Classificação", max_length=30, choices=CLASSIFICACOES, default='NAO_AVALIADO')
 
@@ -105,16 +102,15 @@ class AnalisePontoControle(models.Model):
 
 class SubPontoControle(models.Model):
 
-    codigo = models.CharField(max_length=50)
-    nome = models.CharField(max_length=300)
-    descricao = models.CharField(max_length=1000, null=True, blank=True)
-
     ponto_controle = models.ForeignKey(
         PontoControle,
         on_delete=models.CASCADE,
         null=True,
         blank=True, related_name='sub_pontos_controle')
 
+    codigo = models.CharField(max_length=50)
+    nome = models.CharField(max_length=300)
+    descricao = models.CharField(max_length=1000, null=True, blank=True)
 
     def __str__(self):
         return self.get_codigo_completo() + " - " + self.nome
@@ -133,31 +129,13 @@ class AnaliseSubPontoControle(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     sub_ponto_controle = models.ForeignKey(SubPontoControle, on_delete=models.CASCADE)
+
     analise = RichTextField(null=True, blank=True)
-
-    STATUS = (
-        ('NAO_INICIADO', 'Não iniciado'),
-        ('EM_ANDAMENTO', 'Em andamento'),
-        ('AGUARDANDO', 'Aguardando'),
-        ('FINALIZADO', 'Finalizado'),
-    )
     status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
-
     classificacao = models.CharField(max_length=30, choices=CLASSIFICACOES, default='NAO_AVALIADO')
 
 
 class Tarefa(models.Model):
-
-    codigo = models.CharField(max_length=50)
-    descricao = models.TextField(null=True, blank=True)
-
-    STATUS = (
-        ('NAO_INICIADO', 'Não iniciado'),
-        ('EM_ANDAMENTO', 'Em andamento'),
-        ('AGUARDANDO', 'Aguardando'),
-        ('FINALIZADO', 'Finalizado'),
-    )
-    status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
 
     ponto_controle = models.ForeignKey(
         PontoControle,
@@ -168,6 +146,10 @@ class Tarefa(models.Model):
         SubPontoControle,
         on_delete=models.CASCADE,
         related_name='tarefas', null=True, blank=True)
+
+    codigo = models.CharField(max_length=50)
+    descricao = models.TextField(null=True, blank=True)
+    status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
 
     def get_codigo_completo(self):
         if self.ponto_controle:
@@ -185,25 +167,21 @@ class Tarefa(models.Model):
 
 
 class ObservacaoTarefa(models.Model):
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     tarefa = models.ForeignKey(Tarefa, on_delete=models.CASCADE)
+
+    concluida = models.BooleanField(default=False)
     observacao = RichTextField()
 
 
 class Atividade(models.Model):
 
+    tarefa = models.ForeignKey(Tarefa, on_delete=models.CASCADE, related_name='atividades', null=True)
+
     codigo = models.CharField(max_length=50, null=True, blank=True)
     descricao = models.TextField(null=True, blank=True)
-
-    STATUS = (
-        ('NAO_INICIADO', 'Não iniciado'),
-        ('EM_ANDAMENTO', 'Em andamento'),
-        ('AGUARDANDO', 'Aguardando'),
-        ('FINALIZADO', 'Finalizado'),
-    )
     status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
-
-    tarefa = models.ForeignKey(Tarefa, on_delete=models.CASCADE, related_name='atividades', null=True)
 
     def __str__(self):
         return self.descricao
@@ -216,4 +194,7 @@ class ObservacaoAtividade(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     atividade = models.ForeignKey(Atividade, on_delete=models.CASCADE)
+
+    concluida = models.BooleanField(default=False)
     observacao = RichTextField()
+

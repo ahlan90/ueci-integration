@@ -10,8 +10,8 @@ from django.template.loader import render_to_string
 from django.views.generic import DetailView
 from django_weasyprint import WeasyTemplateResponseMixin
 
-from reluci.forms import AnalisePontoControleForm
-from reluci.models import ItemAbordagem, PontoControle, AnalisePontoControle
+from reluci.forms import AnalisePontoControleForm, ObservacaoTarefaForm
+from reluci.models import ItemAbordagem, PontoControle, AnalisePontoControle, Tarefa, ObservacaoTarefa
 
 
 class FolhaTrabalhoView(DetailView):
@@ -113,6 +113,51 @@ def analise_ponto_controle_update(request, pk):
     else:
         form = AnalisePontoControleForm(instance=analise_ponto_controle)
     return save_analise_ponto_controle_form(request, form, pk, 'reluci/ponto-controle/atualiza_ponto_controle_modal.html')
+
+
+@login_required
+def save_observacao_tarefa_form(request, form, pk, template_name):
+
+    data = dict()
+
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+        else:
+            data['form_is_valid'] = False
+
+    context = {
+        'form': form,
+        'observacao_id': pk,
+    }
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+@login_required
+def observacao_tarefa_create(request, pk):
+
+    tarefa = get_object_or_404(Tarefa, pk=pk)
+
+    if request.method == 'POST':
+        form = ObservacaoTarefaForm(request.POST or None)
+    else:
+        form = ObservacaoTarefaForm(initial={'tarefa': tarefa, 'user': request.user})
+
+    return save_observacao_tarefa_form(request, form, pk, 'reluci/tarefa/cria_observacao_tarefa_modal.html')
+
+
+@login_required
+def observacao_tarefa_update(request, pk):
+
+    observacao_tarefa = get_object_or_404(ObservacaoTarefa, pk=pk)
+
+    if request.method == 'POST':
+        form = ObservacaoTarefaForm(request.POST, instance=observacao_tarefa)
+    else:
+        form = ObservacaoTarefaForm(instance=observacao_tarefa)
+    return save_observacao_tarefa_form(request, form, pk, 'reluci/tarefa/atualiza_observacao_tarefa_modal.html')
 
 
 @login_required

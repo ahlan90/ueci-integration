@@ -233,3 +233,8 @@ a.article, a.article:hover {
 .accordion {
     width: 100%;
 }
+
+.checkbox-lg {
+    width: 24px;
+    height: 24px;
+}

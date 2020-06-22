@@ -1,0 +1,23 @@
+{% extends 'base_modal.html' %}
+
+{% block content_modal %}
+
+<form method="post" action="{% url 'observacao_tarefa_create' observacao_id %}" class="js-observacao-tarefa-create-form">
+    {% csrf_token %}
+    <div class="modal-header">
+        <h5 class="modal-title">Observações da Tarefa</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        {% include 'reluci/tarefa/cria_observacao_tarefa_form.html' %}
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </div>
+</form>
+
+{% endblock content_modal %}
+
