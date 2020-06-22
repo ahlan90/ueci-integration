@@ -18,6 +18,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('core.urls')),
     path('', include('sigefes.urls')),
     path('', include('reluci.urls')),
     path('', include('segregacao_funcao.urls'))

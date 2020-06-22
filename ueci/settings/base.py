@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
      'crispy_forms',
     'ckeditor',
+    'core',
     'sigefes',
     'organograma',
     'reluci',
@@ -134,3 +135,7 @@ CKEDITOR_CONFIGS = {
         'width': '98.5%'
     }
 }
+
+LOGIN_REDIRECT_URL = '/'
+
+LOGOUT_REDIRECT_URL = '/accounts/login'

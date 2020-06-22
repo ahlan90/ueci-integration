@@ -102,6 +102,7 @@ class AnalisePontoControle(models.Model):
     class Meta:
         ordering = ('-criado',)
 
+
 class SubPontoControle(models.Model):
 
     codigo = models.CharField(max_length=50)

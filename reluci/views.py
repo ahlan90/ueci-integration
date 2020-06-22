@@ -3,11 +3,9 @@ from datetime import datetime
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.db.models.functions import Sin
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 
-# Create your views here.
 from django.template.loader import render_to_string
 from django.views.generic import DetailView
 from django_weasyprint import WeasyTemplateResponseMixin
