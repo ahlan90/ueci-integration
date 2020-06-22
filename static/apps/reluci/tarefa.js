@@ -26,7 +26,7 @@ $(function () {
       success: function (data) {
         if (data.form_is_valid) {
           console.log(data);
-          //$("#analise-observacao-tarefa-table tbody").html(data.html_analise_ponto_controle_list);
+          $("#accordion-tarefas").html(data.html_tarefa_list);
           $("#modal-ponto-controle").modal("hide");
         }
         else {

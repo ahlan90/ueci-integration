@@ -15,94 +15,25 @@
         </a>
     </div>
 
-    <div class="row mb-4">
-
-        <div class="col-xl-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <h4 class="header-title mb-3">Análise</h4>
-                        <div>
-                            <button class="btn btn-primary btn-sm js-create-analise-ponto-controle"
-                                    type="button"
-                                    data-url="{% url 'analise_ponto_controle_create' ponto_controle.id %}">
-                                <i class="fa fa-plus"></i>
-                                Nova
-                            </button>
-                        </div>
-                    </div>
-                    <div class="table-responsive m-t-40">
-                        <table cellpadding="0" cellspacing="0" border="0" id="analise-ponto-controle-table"
-                               class="display nowrap table table-hover table-striped table-bordered dataTable">
-                            <thead>
-                            <tr>
-                                <th>Data</th>
-                                <th>Usuário</th>
-                                <th>Status</th>
-                                <th>Classificação</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% include 'reluci/ponto-controle/lista_analise_ponto_controle_parcial.html' %}
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-    </div>
 
     <div class="row">
 
-        <div class="col-xl-8 mb-4">
+        <div class="col-xl-6 mb-4">
             <div class="card">
                 <div class="card-body">
                     <h4 class="header-title mb-3">Tarefas</h4>
-                    <div id="accordion">
-                        {% for tarefa in ponto_controle.tarefas.all %}
-                        <div class="card w-100">
-                            <div class="card-header d-flex justify-content-between" id="heading{{ tarefa.codigo }}">
-                                <h5 class="mb-0">
-                                    <button class="btn" data-toggle="collapse"
-                                            data-target="#collapse{{ tarefa.codigo }}"
-                                            aria-expanded="true" aria-controls="collapse{{ tarefa.codigo }}">
-                                        {{ tarefa.codigo }}. {{ tarefa.descricao|slice:60 }}...
-                                    </button>
-                                </h5>
-                                <div>
-                                    <span class="badge">{{ tarefa.status }}</span>
-                                </div>
-                                <div>
-                                    <button class="btn btn-success btn-sm js-create-observacao-tarefa"
-                                            data-url="{% url 'observacao_tarefa_create' tarefa.id %}"
-                                            type="button">
-                                        <i class="fa fa-pencil"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div id="collapse{{ tarefa.codigo }}" class="collapse"
-                                 aria-labelledby="heading{{ tarefa.codigo }}"
-                                 data-parent="#accordion">
-                                <div class="card-body">
-                                    {{ tarefa.descricao }}
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
+                    <div id="accordion-tarefas">
+                        {% include 'reluci/ponto-controle/lista_tarefa_parcial.html' %}
                     </div>
                 </div>
             </div>
         </div>
 
 
-        <div class="col-xl-4 mb-4">
+        <div class="col-xl-6 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title mb-3">Arquivos</h4>
+                    <h4 class="header-title mb-3">Análise</h4>
 
                     <div class="table-responsive">
 
@@ -113,6 +44,46 @@
 
     </div>
 
+
+    <div class="row mb-4">
+
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <h4 class="header-title mb-3">Análise</h4>
+                    <div>
+                        <button class="btn btn-primary btn-sm js-create-analise-ponto-controle"
+                                type="button"
+                                data-url="{% url 'analise_ponto_controle_create' ponto_controle.id %}">
+                            <i class="fa fa-plus"></i>
+                            Nova
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive m-t-40">
+                    <table cellpadding="0" cellspacing="0" border="0" id="analise-ponto-controle-table"
+                           class="display nowrap table table-hover table-striped table-bordered dataTable">
+                        <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Usuário</th>
+                            <th>Status</th>
+                            <th>Classificação</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% include 'reluci/ponto-controle/lista_analise_ponto_controle_parcial.html' %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
 
 </div>
 

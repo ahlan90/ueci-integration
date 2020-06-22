@@ -30,7 +30,7 @@ class ObservacaoTarefaForm(ModelForm):
 
     class Meta:
         model = ObservacaoTarefa
-        fields = ['concluida', 'observacao', 'tarefa', 'user']
+        fields = ['status', 'observacao', 'tarefa', 'user']
         widgets = {
             'tarefa': HiddenInput(),
             'user': HiddenInput()
@@ -41,7 +41,7 @@ class ObservacaoAtividadeForm(ModelForm):
 
     class Meta:
         model = ObservacaoAtividade
-        fields = ['concluida', 'observacao', 'atividade', 'user']
+        fields = ['status', 'observacao', 'atividade', 'user']
         widgets = {
             'atividade': HiddenInput(),
             'user': HiddenInput()

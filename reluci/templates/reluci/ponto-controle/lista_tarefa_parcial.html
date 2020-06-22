@@ -1,0 +1,31 @@
+{% for tarefa in ponto_controle.tarefas.all %}
+<div class="card w-100">
+    <div class="card-header d-flex justify-content-between" id="heading{{ tarefa.codigo }}">
+        <h5 class="mb-0">
+            <button class="btn" data-toggle="collapse"
+                    data-target="#collapse{{ tarefa.codigo }}"
+                    aria-expanded="true" aria-controls="collapse{{ tarefa.codigo }}">
+                {{ tarefa.codigo }}. {{ tarefa.descricao|slice:60 }}...
+            </button>
+        </h5>
+        <div>
+            <span class="badge">{{ tarefa.get_status_detail }}</span>
+        </div>
+        <div>
+            <button class="btn btn-success btn-sm js-create-observacao-tarefa"
+                    data-url="{% url 'observacao_tarefa_create' tarefa.id %}"
+                    type="button">
+                <i class="fa fa-pencil"></i>
+            </button>
+        </div>
+    </div>
+
+    <div id="collapse{{ tarefa.codigo }}" class="collapse"
+         aria-labelledby="heading{{ tarefa.codigo }}"
+         data-parent="#accordion-tarefas">
+        <div class="card-body">
+            {{ tarefa.descricao }}
+        </div>
+    </div>
+</div>
+{% endfor %}

@@ -16,6 +16,7 @@ CLASSIFICACOES = (
     ('NAO_ATENDE', 'Não atende'),
 )
 
+
 class ItemAbordagem(models.Model):
 
     codigo = models.CharField(max_length=50)
@@ -149,7 +150,7 @@ class Tarefa(models.Model):
 
     codigo = models.CharField(max_length=50)
     descricao = models.TextField(null=True, blank=True)
-    status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
+    #status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
 
     def get_codigo_completo(self):
         if self.ponto_controle:
@@ -158,6 +159,14 @@ class Tarefa(models.Model):
             if self.sub_ponto_controle:
                 return self.sub_ponto_controle.get_codigo_completo() + '.' + self.codigo
             return self.codigo
+
+    def get_status_detail(self):
+        observacao: ObservacaoTarefa = self.observacoes.last()
+        if observacao:
+            return observacao.status
+        else:
+            return STATUS[0][0]
+
 
     def __str__(self):
         return self.descricao
@@ -169,9 +178,9 @@ class Tarefa(models.Model):
 class ObservacaoTarefa(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    tarefa = models.ForeignKey(Tarefa, on_delete=models.CASCADE)
+    tarefa = models.ForeignKey(Tarefa, on_delete=models.CASCADE, related_name='observacoes')
 
-    concluida = models.BooleanField(default=False)
+    status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
     observacao = RichTextField()
 
 
@@ -181,7 +190,8 @@ class Atividade(models.Model):
 
     codigo = models.CharField(max_length=50, null=True, blank=True)
     descricao = models.TextField(null=True, blank=True)
-    status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
+
+    #status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
 
     def __str__(self):
         return self.descricao
@@ -195,6 +205,5 @@ class ObservacaoAtividade(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     atividade = models.ForeignKey(Atividade, on_delete=models.CASCADE)
 
-    concluida = models.BooleanField(default=False)
+    status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
     observacao = RichTextField()
-
