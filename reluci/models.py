@@ -167,9 +167,8 @@ class Tarefa(models.Model):
         else:
             return STATUS[0][0]
 
-
     def __str__(self):
-        return self.descricao
+        return self.get_codigo_completo()
 
     class Meta:
         ordering = ('codigo',)
@@ -184,8 +183,14 @@ class Atividade(models.Model):
 
     #status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
 
+    def get_codigo_completo(self):
+        if self.tarefa:
+            return self.tarefa.get_codigo_completo() + '.' + str(self.codigo)
+
+        return self.codigo
+
     def __str__(self):
-        return self.descricao
+        return self.get_codigo_completo()
 
     class Meta:
         ordering = ('codigo',)
@@ -195,9 +200,9 @@ class ObservacaoTarefaAtividade(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     tarefa = models.ForeignKey(Tarefa, on_delete=models.CASCADE,
-                               null=True, blank=True, related_name='observacoes_tarefa')
-    atividade = models.ForeignKey(Atividade, on_delete=models.CASCADE,
-                                  null=True, blank=True, related_name='observacoes_atividade')
+                               null=True, related_name='observacoes_tarefa')
+    atividade = models.ForeignKey(Atividade, on_delete=models.CASCADE, blank=True,
+                                  null=True, related_name='observacoes_atividade')
 
     status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
     observacao = RichTextField()

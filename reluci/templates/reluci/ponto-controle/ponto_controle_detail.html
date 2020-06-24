@@ -21,7 +21,7 @@
         <div class="col-xl-6 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title mb-3">Tarefas</h4>
+                    <h4 class="header-title mb-3">Demandas</h4>
                     <div id="accordion-tarefas">
                         {% include 'reluci/ponto-controle/lista_tarefa_parcial.html' %}
                     </div>
@@ -33,16 +33,11 @@
         <div class="col-xl-6 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title mb-3">Observações</h4>
 
                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home"
-                               role="tab" aria-controls="pills-home" aria-selected="true">Tarefa</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
-                               role="tab" aria-controls="pills-profile" aria-selected="false">Atividade</a>
+                               role="tab" aria-controls="pills-home" aria-selected="true">Demanda</a>
                         </li>
                         <li class="nav-item" role="presentation">
                             <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact"
@@ -56,14 +51,7 @@
                                 {% load crispy_forms_tags %}
                                 {% csrf_token %}
                                 {{ form_tarefa|crispy }}
-                            </form>
-                        </div>
-                        <div class="tab-pane fade" id="pills-profile" role="tabpanel"
-                             aria-labelledby="pills-profile-tab">
-                            <form method="POST">
-                                {% load crispy_forms_tags %}
-                                {% csrf_token %}
-                                {{ form_atividade|crispy }}
+                                <button class="btn btn-primary">Salvar</button>
                             </form>
                         </div>
                         <div class="tab-pane fade" id="pills-contact" role="tabpanel"
@@ -72,6 +60,8 @@
                                 {% load crispy_forms_tags %}
                                 {% csrf_token %}
                                 {{ form_analise|crispy }}
+
+                                <button class="btn btn-primary align-self-end">Salvar</button>
                             </form>
                         </div>
                     </div>

@@ -1,31 +1,50 @@
 {% for tarefa in ponto_controle.tarefas.all %}
 <div class="card w-100">
     <div class="card-header d-flex justify-content-between" id="heading{{ tarefa.codigo }}">
-        <h5 class="mb-0">
-            <button class="btn" data-toggle="collapse"
-                    data-target="#collapse{{ tarefa.codigo }}"
-                    aria-expanded="true" aria-controls="collapse{{ tarefa.codigo }}">
-                {{ tarefa.codigo }}. {{ tarefa.descricao|slice:60 }}...
-            </button>
-        </h5>
-        <div>
-            <span class="badge">{{ tarefa.get_status_detail }}</span>
-        </div>
-        <div>
-            <button class="btn btn-success btn-sm js-create-observacao-tarefa"
-                    data-url="{% url 'observacao_tarefa_create' tarefa.id %}"
-                    type="button">
-                <i class="fa fa-pencil"></i>
-            </button>
-        </div>
+
+        <button class="btn text-justify" data-toggle="collapse"
+                data-target="#collapse{{ tarefa.codigo }}"
+                aria-expanded="true" aria-controls="collapse{{ tarefa.codigo }}">
+            <i class="fa fa-sort-down"></i>
+        </button>
+
+        <button class="btn bt-outline" style="overflow: auto; white-space: nowrap;">
+            <span class="text-dark">{{ tarefa.codigo }}. {{ tarefa.descricao|slice:60 }}...<span>
+        </button>
     </div>
 
     <div id="collapse{{ tarefa.codigo }}" class="collapse"
          aria-labelledby="heading{{ tarefa.codigo }}"
          data-parent="#accordion-tarefas">
         <div class="card-body">
-            {{ tarefa.descricao }}
+            <p>Histórico de observações</p>
         </div>
     </div>
 </div>
+
+{% for atividade in tarefa.atividades.all %}
+<div class="card w-100">
+    <div class="card-header d-flex justify-content-between" id="heading{{ atividade.codigo }}">
+        <h5 class="mb-0">
+            <button class="btn" data-toggle="collapse"
+                    data-target="#collapse{{ atividade.codigo }}"
+                    aria-expanded="true" aria-controls="collapse{{ atividade.codigo }}">
+                <i class="fa fa-sort-down"></i>
+            </button>
+            <button class="btn bt-outline" style="overflow: auto; white-space: nowrap;">
+                {{ atividade.codigo }}. {{ atividade.descricao|slice:60 }}...
+            </button>
+        </h5>
+    </div>
+
+    <div id="collapse{{ atividade.codigo }}" class="collapse"
+         aria-labelledby="heading{{ atividade.codigo }}"
+         data-parent="#accordion-tarefas">
+        <div class="card-body">
+            <p>Histórico de observações</p>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
 {% endfor %}

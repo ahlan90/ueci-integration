@@ -32,7 +32,7 @@ class ObservacaoTarefaForm(ModelForm):
 
     class Meta:
         model = ObservacaoTarefaAtividade
-        fields = ['tarefa', 'status', 'observacao', 'user']
+        fields = ['tarefa', 'atividade', 'status', 'observacao', 'user']
         widgets = {
             'user': HiddenInput(),
         }
