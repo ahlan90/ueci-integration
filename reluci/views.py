@@ -166,6 +166,10 @@ def ponto_controle_detail(request, pk):
         if form_observacao.is_valid():
             form_observacao.save()
             return redirect('ponto_controle_detail', pk)
+
+        if form_analise.is_valid():
+            form_analise.save()
+            return redirect('ponto_controle_detail', pk)
     else:
         form_analise = AnalisePontoControleForm(
             initial={'ponto_controle': ponto_controle, 'user': request.user})

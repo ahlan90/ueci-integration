@@ -43,16 +43,3 @@ class ObservacaoForm(ModelForm):
             tarefas = Tarefa.objects.filter(ponto_controle=ponto_controle)
             self.fields['tarefa'].queryset = tarefas
             self.fields['atividade'].queryset = Atividade.objects.filter(tarefa__in=tarefas)
-
-
-
-# class ObservacaoAtividadeForm(ModelForm):
-#
-#     observacao = CharField(widget=CKEditorWidget(attrs={'id': 'id_observacao_atividade'}))
-#
-#     class Meta:
-#         model = ObservacaoTarefaAtividade
-#         fields = ['atividade', 'status', 'observacao', 'user']
-#         widgets = {
-#             'user': HiddenInput()
-#         }
