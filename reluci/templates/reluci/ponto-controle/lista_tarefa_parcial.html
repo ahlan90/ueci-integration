@@ -8,8 +8,10 @@
             <i class="fa fa-sort-down"></i>
         </button>
 
-        <button class="btn bt-outline" style="overflow: auto; white-space: nowrap;">
-            <span class="text-dark">{{ tarefa.codigo }}. {{ tarefa.descricao|slice:60 }}...<span>
+        <button class="btn bt-outline text-truncate">
+            <span class="text-dark ">
+                <strong class="mr-2">{{ tarefa.codigo }}.</strong>
+                {{ tarefa.descricao }}<span>
         </button>
     </div>
 
@@ -17,7 +19,20 @@
          aria-labelledby="heading{{ tarefa.codigo }}"
          data-parent="#accordion-tarefas">
         <div class="card-body">
-            <p>Histórico de observações</p>
+            {% if tarefa.observacoes_tarefa.all %}
+            {% for observacao in tarefa.observacoes_tarefa.all %}
+
+            <div class="d-flex justify-content-between">
+                <h5><small>Autor: </small>{{ observacao.user }}</h5>
+                <small class="text-muted">{{ observacao.data_criacao|date:'d/m/yy' }}</small>
+            </div>
+            <p>{{ observacao|safe }}</p>
+            <hr>
+
+            {% endfor %}
+            {% else %}
+            <p>Ainda não foram feitas observações desta tarefa.</p>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -30,9 +45,11 @@
                     data-target="#collapse{{ atividade.codigo }}"
                     aria-expanded="true" aria-controls="collapse{{ atividade.codigo }}">
                 <i class="fa fa-sort-down"></i>
+
             </button>
-            <button class="btn bt-outline" style="overflow: auto; white-space: nowrap;">
-                {{ atividade.codigo }}. {{ atividade.descricao|slice:60 }}...
+            <button class="btn bt-outline text-truncate">
+                <strong class="ml-4 mr-2">{{ atividade.codigo }}. </strong>
+                {{ atividade.descricao}}
             </button>
         </h5>
     </div>
@@ -41,7 +58,18 @@
          aria-labelledby="heading{{ atividade.codigo }}"
          data-parent="#accordion-tarefas">
         <div class="card-body">
-            <p>Histórico de observações</p>
+            {% if atividade.observacoes_atividade.all %}
+            {% for observacao in atividade.observacoes_atividade.all %}
+            <div class="d-flex justify-content-between">
+                <h5><small>Autor: </small>{{ observacao.user }}</h5>
+                <small class="text-muted">{{ observacao.data_criacao|date:'d/m/yy' }}</small>
+            </div>
+            <p>{{ observacao|safe }}</p>
+            <hr>
+            {% endfor %}
+            {% else %}
+            <p>Ainda não foram feitas observações desta atividade</p>
+            {% endif %}
         </div>
     </div>
 </div>

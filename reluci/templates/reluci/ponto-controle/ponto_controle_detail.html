@@ -18,7 +18,7 @@
 
     <div class="row">
 
-        <div class="col-xl-6 mb-4">
+        <div class="col-xl-6 mb-4 d-flex align-items-stretch">
             <div class="card">
                 <div class="card-body">
                     <h4 class="header-title mb-3">Demandas</h4>
@@ -50,7 +50,7 @@
                             <form method="POST">
                                 {% load crispy_forms_tags %}
                                 {% csrf_token %}
-                                {{ form_tarefa|crispy }}
+                                {{ form_observacao|crispy }}
                                 <button class="btn btn-primary">Salvar</button>
                             </form>
                         </div>

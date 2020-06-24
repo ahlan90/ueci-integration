@@ -4,14 +4,13 @@ from datetime import datetime
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 from django.template.loader import render_to_string
 from django.views.generic import DetailView
 from django_weasyprint import WeasyTemplateResponseMixin
 
-from reluci.forms import AnalisePontoControleForm, ObservacaoTarefaForm, \
-    ObservacaoAtividadeForm
+from reluci.forms import AnalisePontoControleForm, ObservacaoForm
 from reluci.models import ItemAbordagem, PontoControle, AnalisePontoControle, Tarefa, ObservacaoTarefaAtividade
 
 
@@ -136,9 +135,9 @@ def observacao_tarefa_create(request, pk):
     tarefa = get_object_or_404(Tarefa, pk=pk)
 
     if request.method == 'POST':
-        form = ObservacaoTarefaForm(request.POST or None)
+        form = ObservacaoForm(request.POST or None)
     else:
-        form = ObservacaoTarefaForm(initial={'tarefa': tarefa, 'user': request.user})
+        form = ObservacaoForm(initial={'tarefa': tarefa, 'user': request.user})
 
     return save_observacao_tarefa_form(request, form, pk, 'reluci/tarefa/cria_observacao_tarefa_modal.html')
 
@@ -148,9 +147,9 @@ def observacao_tarefa_update(request, pk):
     observacao_tarefa = get_object_or_404(ObservacaoTarefa, pk=pk)
 
     if request.method == 'POST':
-        form = ObservacaoTarefaForm(request.POST, instance=observacao_tarefa)
+        form = ObservacaoForm(request.POST, instance=observacao_tarefa)
     else:
-        form = ObservacaoTarefaForm(instance=observacao_tarefa)
+        form = ObservacaoForm(instance=observacao_tarefa)
     return save_observacao_tarefa_form(request, form, pk, 'reluci/tarefa/atualiza_observacao_tarefa_modal.html')
 
 
@@ -162,22 +161,22 @@ def ponto_controle_detail(request, pk):
 
     if request.method == 'POST':
         form_analise = AnalisePontoControleForm(request.POST)
-        form_tarefa = ObservacaoTarefaForm(request.POST)
-        form_atividade = ObservacaoAtividadeForm(request.POST)
+        form_observacao = ObservacaoForm(request.POST)
 
+        if form_observacao.is_valid():
+            form_observacao.save()
+            return redirect('ponto_controle_detail', pk)
     else:
         form_analise = AnalisePontoControleForm(
             initial={'ponto_controle': ponto_controle, 'user': request.user})
-        form_tarefa = ObservacaoTarefaForm(initial={'user': request.user})
-        form_atividade = ObservacaoAtividadeForm(initial={'user': request.user})
+        form_observacao = ObservacaoForm(initial={'user': request.user}, ponto_controle=ponto_controle)
 
     data = {
         'titulo': 'Ponto de Controle ' + ponto_controle.get_codigo_completo(),
         'itens_abordagem': itens_abordagem,
         'ponto_controle': ponto_controle,
         'form_analise': form_analise,
-        'form_tarefa': form_tarefa,
-        'form_atividade': form_atividade,
+        'form_observacao': form_observacao,
         'sidebar': 'active'
     }
 

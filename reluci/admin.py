@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from reluci.models import ItemGestao, PontoControle, Atividade, ItemAbordagem, Tarefa, SubPontoControle, \
-    AnalisePontoControle, AnaliseSubPontoControle
+    AnalisePontoControle, AnaliseSubPontoControle, ObservacaoTarefaAtividade
 
 admin.site.register(ItemAbordagem)
 admin.site.register(ItemGestao)
@@ -14,3 +14,4 @@ admin.site.register(Atividade)
 admin.site.register(AnalisePontoControle)
 admin.site.register(AnaliseSubPontoControle)
 
+admin.site.register(ObservacaoTarefaAtividade)

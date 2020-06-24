@@ -1,6 +1,8 @@
 from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
+
 
 STATUS = (
     ('NAO_INICIADO', 'Não iniciado'),
@@ -93,6 +95,8 @@ class AnalisePontoControle(models.Model):
     alterado = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
     classificacao = models.CharField("Classificação", max_length=30, choices=CLASSIFICACOES, default='NAO_AVALIADO')
+    data_criacao = models.DateTimeField(default=timezone.now, null=True, blank=True)
+
 
     def __str__(self):
         return 'Ponto de Controle: ' + self.ponto_controle.get_codigo_completo() + ' - Usuário: ' + str(self.user)
@@ -199,10 +203,15 @@ class Atividade(models.Model):
 class ObservacaoTarefaAtividade(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
     tarefa = models.ForeignKey(Tarefa, on_delete=models.CASCADE,
                                null=True, related_name='observacoes_tarefa')
     atividade = models.ForeignKey(Atividade, on_delete=models.CASCADE, blank=True,
                                   null=True, related_name='observacoes_atividade')
 
     status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
+    data_criacao = models.DateTimeField(default=timezone.now, null=True, blank=True)
     observacao = RichTextField()
+
+    def __str__(self):
+        return self.observacao
