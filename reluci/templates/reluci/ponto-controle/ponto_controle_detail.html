@@ -33,11 +33,50 @@
         <div class="col-xl-6 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title mb-3">Análise</h4>
+                    <h4 class="header-title mb-3">Observações</h4>
 
-                    <div class="table-responsive">
-
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home"
+                               role="tab" aria-controls="pills-home" aria-selected="true">Tarefa</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
+                               role="tab" aria-controls="pills-profile" aria-selected="false">Atividade</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact"
+                               role="tab" aria-controls="pills-contact" aria-selected="false">Análise</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                             aria-labelledby="pills-home-tab">
+                            <form method="POST">
+                                {% load crispy_forms_tags %}
+                                {% csrf_token %}
+                                {{ form_tarefa|crispy }}
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                             aria-labelledby="pills-profile-tab">
+                            <form method="POST">
+                                {% load crispy_forms_tags %}
+                                {% csrf_token %}
+                                {{ form_atividade|crispy }}
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="pills-contact" role="tabpanel"
+                             aria-labelledby="pills-contact-tab">
+                            <form method="POST">
+                                {% load crispy_forms_tags %}
+                                {% csrf_token %}
+                                {{ form_analise|crispy }}
+                            </form>
+                        </div>
                     </div>
+
+
                 </div>
             </div>
         </div>
@@ -47,43 +86,43 @@
 
     <div class="row mb-4">
 
-    <div class="col-xl-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <h4 class="header-title mb-3">Análise</h4>
-                    <div>
-                        <button class="btn btn-primary btn-sm js-create-analise-ponto-controle"
-                                type="button"
-                                data-url="{% url 'analise_ponto_controle_create' ponto_controle.id %}">
-                            <i class="fa fa-plus"></i>
-                            Nova
-                        </button>
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h4 class="header-title mb-3">Análise</h4>
+                        <div>
+                            <button class="btn btn-primary btn-sm js-create-analise-ponto-controle"
+                                    type="button"
+                                    data-url="{% url 'analise_ponto_controle_create' ponto_controle.id %}">
+                                <i class="fa fa-plus"></i>
+                                Nova
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="table-responsive m-t-40">
-                    <table cellpadding="0" cellspacing="0" border="0" id="analise-ponto-controle-table"
-                           class="display nowrap table table-hover table-striped table-bordered dataTable">
-                        <thead>
-                        <tr>
-                            <th>Data</th>
-                            <th>Usuário</th>
-                            <th>Status</th>
-                            <th>Classificação</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% include 'reluci/ponto-controle/lista_analise_ponto_controle_parcial.html' %}
-                        </tbody>
-                    </table>
-                </div>
+                    <div class="table-responsive m-t-40">
+                        <table cellpadding="0" cellspacing="0" border="0" id="analise-ponto-controle-table"
+                               class="display nowrap table table-hover table-striped table-bordered dataTable">
+                            <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Usuário</th>
+                                <th>Status</th>
+                                <th>Classificação</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% include 'reluci/ponto-controle/lista_analise_ponto_controle_parcial.html' %}
+                            </tbody>
+                        </table>
+                    </div>
 
+                </div>
             </div>
         </div>
-    </div>
 
-</div>
+    </div>
 
 </div>
 

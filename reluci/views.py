@@ -10,12 +10,12 @@ from django.template.loader import render_to_string
 from django.views.generic import DetailView
 from django_weasyprint import WeasyTemplateResponseMixin
 
-from reluci.forms import AnalisePontoControleForm, ObservacaoTarefaForm
-from reluci.models import ItemAbordagem, PontoControle, AnalisePontoControle, Tarefa, ObservacaoTarefa
+from reluci.forms import AnalisePontoControleForm, ObservacaoTarefaForm, \
+    ObservacaoAtividadeForm
+from reluci.models import ItemAbordagem, PontoControle, AnalisePontoControle, Tarefa, ObservacaoTarefaAtividade
 
 
 class FolhaTrabalhoView(DetailView):
-
     model = PontoControle
     template_name = 'reluci/folha_trabalho_pdf.html'
 
@@ -31,7 +31,6 @@ class FolhaTrabalhoView(DetailView):
 
 
 class FolhaTrabalhoPrintView(WeasyTemplateResponseMixin, FolhaTrabalhoView):
-
     # output of MyModelView rendered as PDF with hardcoded CSS
     pdf_stylesheets = [
         settings.STATIC_ROOT + '/apps/folha-trabalho.css',
@@ -44,7 +43,6 @@ class FolhaTrabalhoPrintView(WeasyTemplateResponseMixin, FolhaTrabalhoView):
 
 
 def checklist_reluci(request):
-
     itens_abordagem = ItemAbordagem.objects.all()
 
     data = {
@@ -59,7 +57,6 @@ def checklist_reluci(request):
 
 @login_required
 def relato_ponto_controle(request, pk):
-
     ponto = get_object_or_404(PontoControle, pk=pk)
 
     data = {
@@ -79,8 +76,8 @@ def save_analise_ponto_controle_form(request, form, pk, template_name):
             ponto_controle = get_object_or_404(PontoControle, pk=pk)
             data['html_analise_ponto_controle_list'] = render_to_string(
                 'reluci/ponto-controle/lista_analise_ponto_controle_parcial.html', {
-                'ponto_controle': ponto_controle
-            })
+                    'ponto_controle': ponto_controle
+                })
         else:
             data['form_is_valid'] = False
 
@@ -94,7 +91,6 @@ def save_analise_ponto_controle_form(request, form, pk, template_name):
 
 @login_required
 def analise_ponto_controle_create(request, pk):
-
     ponto_controle = get_object_or_404(PontoControle, pk=pk)
 
     if request.method == 'POST':
@@ -112,12 +108,12 @@ def analise_ponto_controle_update(request, pk):
         form = AnalisePontoControleForm(request.POST, instance=analise_ponto_controle)
     else:
         form = AnalisePontoControleForm(instance=analise_ponto_controle)
-    return save_analise_ponto_controle_form(request, form, pk, 'reluci/ponto-controle/atualiza_ponto_controle_modal.html')
+    return save_analise_ponto_controle_form(request, form, pk,
+                                            'reluci/ponto-controle/atualiza_ponto_controle_modal.html')
 
 
 @login_required
 def save_observacao_tarefa_form(request, form, pk, template_name):
-
     data = dict()
 
     if request.method == 'POST':
@@ -137,7 +133,6 @@ def save_observacao_tarefa_form(request, form, pk, template_name):
 
 @login_required
 def observacao_tarefa_create(request, pk):
-
     tarefa = get_object_or_404(Tarefa, pk=pk)
 
     if request.method == 'POST':
@@ -150,7 +145,6 @@ def observacao_tarefa_create(request, pk):
 
 @login_required
 def observacao_tarefa_update(request, pk):
-
     observacao_tarefa = get_object_or_404(ObservacaoTarefa, pk=pk)
 
     if request.method == 'POST':
@@ -162,20 +156,29 @@ def observacao_tarefa_update(request, pk):
 
 @login_required
 def ponto_controle_detail(request, pk):
-
     itens_abordagem = ItemAbordagem.objects.all()
 
     ponto_controle = get_object_or_404(PontoControle, pk=pk)
 
-    form = AnalisePontoControleForm(initial={'ponto_controle': ponto_controle, 'user': request.user})
+    if request.method == 'POST':
+        form_analise = AnalisePontoControleForm(request.POST)
+        form_tarefa = ObservacaoTarefaForm(request.POST)
+        form_atividade = ObservacaoAtividadeForm(request.POST)
+
+    else:
+        form_analise = AnalisePontoControleForm(
+            initial={'ponto_controle': ponto_controle, 'user': request.user})
+        form_tarefa = ObservacaoTarefaForm(initial={'user': request.user})
+        form_atividade = ObservacaoAtividadeForm(initial={'user': request.user})
 
     data = {
         'titulo': 'Ponto de Controle ' + ponto_controle.get_codigo_completo(),
         'itens_abordagem': itens_abordagem,
         'ponto_controle': ponto_controle,
-        'form': form,
+        'form_analise': form_analise,
+        'form_tarefa': form_tarefa,
+        'form_atividade': form_atividade,
         'sidebar': 'active'
     }
 
     return render(request, 'reluci/ponto-controle/ponto_controle_detail.html', data)
-

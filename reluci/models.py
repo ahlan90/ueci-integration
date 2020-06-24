@@ -161,7 +161,7 @@ class Tarefa(models.Model):
             return self.codigo
 
     def get_status_detail(self):
-        observacao: ObservacaoTarefa = self.observacoes.last()
+        observacao = self.observacoes_tarefa.last()
         if observacao:
             return observacao.status
         else:
@@ -173,15 +173,6 @@ class Tarefa(models.Model):
 
     class Meta:
         ordering = ('codigo',)
-
-
-class ObservacaoTarefa(models.Model):
-
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    tarefa = models.ForeignKey(Tarefa, on_delete=models.CASCADE, related_name='observacoes')
-
-    status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
-    observacao = RichTextField()
 
 
 class Atividade(models.Model):
@@ -200,10 +191,13 @@ class Atividade(models.Model):
         ordering = ('codigo',)
 
 
-class ObservacaoAtividade(models.Model):
+class ObservacaoTarefaAtividade(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    atividade = models.ForeignKey(Atividade, on_delete=models.CASCADE)
+    tarefa = models.ForeignKey(Tarefa, on_delete=models.CASCADE,
+                               null=True, blank=True, related_name='observacoes_tarefa')
+    atividade = models.ForeignKey(Atividade, on_delete=models.CASCADE,
+                                  null=True, blank=True, related_name='observacoes_atividade')
 
     status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
     observacao = RichTextField()

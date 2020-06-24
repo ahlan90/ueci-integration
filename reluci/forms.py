@@ -1,7 +1,7 @@
 from ckeditor.widgets import CKEditorWidget
-from django.forms import ModelForm, CharField, TextInput, forms, HiddenInput
+from django.forms import ModelForm, CharField, TextInput, forms, HiddenInput, models
 
-from reluci.models import PontoControle, AnalisePontoControle, ObservacaoTarefa, ObservacaoAtividade
+from reluci.models import PontoControle, AnalisePontoControle, ObservacaoTarefaAtividade
 
 
 class AnalisePontoControleForm(ModelForm):
@@ -28,21 +28,23 @@ class AnalisePontoControleForm(ModelForm):
 
 class ObservacaoTarefaForm(ModelForm):
 
+    observacao = CharField(widget=CKEditorWidget(attrs={'id': 'id_observacao_tarefa'}))
+
     class Meta:
-        model = ObservacaoTarefa
-        fields = ['status', 'observacao', 'tarefa', 'user']
+        model = ObservacaoTarefaAtividade
+        fields = ['tarefa', 'status', 'observacao', 'user']
         widgets = {
-            'tarefa': HiddenInput(),
-            'user': HiddenInput()
+            'user': HiddenInput(),
         }
 
 
 class ObservacaoAtividadeForm(ModelForm):
 
+    observacao = CharField(widget=CKEditorWidget(attrs={'id': 'id_observacao_atividade'}))
+
     class Meta:
-        model = ObservacaoAtividade
-        fields = ['status', 'observacao', 'atividade', 'user']
+        model = ObservacaoTarefaAtividade
+        fields = ['atividade', 'status', 'observacao', 'user']
         widgets = {
-            'atividade': HiddenInput(),
             'user': HiddenInput()
         }
