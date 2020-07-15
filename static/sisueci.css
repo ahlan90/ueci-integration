@@ -241,4 +241,5 @@ a.article, a.article:hover {
 
 .btn-organograma {
     padding: 20px 80px;
+    z-index: 2;
 }

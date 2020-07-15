@@ -5,6 +5,15 @@
     <div class="offset-md-2 col-md-8">
         <div class="d-flex justify-content-center my-3">
             {% for entidade in object_list|slice:"1" %}
+            <a class="btn btn-secondary btn-organograma" href="{% url 'checklist_reluci' %}">
+                <h2>Reluci</h2>
+                <h2>{{ entidade.sigla }}</h2>
+            </a>
+            {% endfor %}
+        </div>
+
+        <div class="d-flex justify-content-center mt-5">
+            {% for entidade in object_list|slice:"1:2" %}
             <a class="btn btn-warning btn-organograma" href="{% url 'checklist_reluci' %}">
                 <h2>Reluci</h2>
                 <h2>{{ entidade.sigla }}</h2>
@@ -12,9 +21,10 @@
             {% endfor %}
         </div>
 
+
         <div class="d-flex justify-content-between mt-5">
             {% for entidade in object_list %}
-            {% if not forloop.first %}
+            {% if forloop.counter > 2 %}
             <div class="w-100 text-center">
                 <a class="btn btn-primary btn-organograma" href="{% url 'checklist_reluci' %}">
                     <h2>Reluci</h2>
