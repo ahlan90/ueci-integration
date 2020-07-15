@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
      'crispy_forms',
     'ckeditor',
+    'django_extensions',
     'core',
     'sigefes',
     'organograma',
@@ -139,3 +140,8 @@ CKEDITOR_CONFIGS = {
 LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_REDIRECT_URL = '/accounts/login'
+
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}

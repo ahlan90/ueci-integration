@@ -154,7 +154,6 @@ class Tarefa(models.Model):
 
     codigo = models.CharField(max_length=50)
     descricao = models.TextField(null=True, blank=True)
-    #status = models.CharField(max_length=30, choices=STATUS, default='NAO_INICIADO')
 
     def get_codigo_completo(self):
         if self.ponto_controle:

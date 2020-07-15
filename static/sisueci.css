@@ -238,3 +238,7 @@ a.article, a.article:hover {
     width: 24px;
     height: 24px;
 }
+
+.btn-organograma {
+    padding: 20px 80px;
+}

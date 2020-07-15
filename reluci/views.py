@@ -155,6 +155,7 @@ def observacao_tarefa_update(request, pk):
 
 @login_required
 def ponto_controle_detail(request, pk):
+
     itens_abordagem = ItemAbordagem.objects.all()
 
     ponto_controle = get_object_or_404(PontoControle, pk=pk)
@@ -174,6 +175,57 @@ def ponto_controle_detail(request, pk):
         form_analise = AnalisePontoControleForm(
             initial={'ponto_controle': ponto_controle, 'user': request.user})
         form_observacao = ObservacaoForm(initial={'user': request.user}, ponto_controle=ponto_controle)
+
+    data = {
+        'titulo': 'Ponto de Controle ' + ponto_controle.get_codigo_completo(),
+        'itens_abordagem': itens_abordagem,
+        'ponto_controle': ponto_controle,
+        'form_analise': form_analise,
+        'form_observacao': form_observacao,
+        'sidebar': 'active'
+    }
+
+    return render(request, 'reluci/ponto-controle/ponto_controle_detail.html', data)
+
+
+@login_required
+def ponto_controle_detail_analise(request, pk):
+
+    itens_abordagem = ItemAbordagem.objects.all()
+
+    analise = get_object_or_404(AnalisePontoControle, pk=pk)
+
+    ponto_controle = get_object_or_404(PontoControle, pk=analise.ponto_controle.id)
+
+    form_analise = AnalisePontoControleForm(instance=analise)
+
+    form_observacao = ObservacaoForm(initial={'user': request.user}, ponto_controle=ponto_controle)
+
+    data = {
+        'titulo': 'Ponto de Controle ' + ponto_controle.get_codigo_completo(),
+        'itens_abordagem': itens_abordagem,
+        'ponto_controle': ponto_controle,
+        'form_analise': form_analise,
+        'form_observacao': form_observacao,
+        'sidebar': 'active'
+    }
+
+    return render(request, 'reluci/ponto-controle/ponto_controle_detail.html', data)
+
+
+@login_required
+def ponto_controle_detail_observacao(request, pk):
+
+    itens_abordagem = ItemAbordagem.objects.all()
+
+    observacao = get_object_or_404(ObservacaoTarefaAtividade, pk=pk)
+
+    ponto_controle = get_object_or_404(PontoControle, pk=observacao.ponto_controle.id)
+
+    form_analise = AnalisePontoControleForm(
+        initial={'ponto_controle': ponto_controle, 'user': request.user})
+
+    form_observacao = ObservacaoForm(instance=observacao)
 
     data = {
         'titulo': 'Ponto de Controle ' + ponto_controle.get_codigo_completo(),

@@ -11,6 +11,8 @@ urlpatterns = [
     path('ponto-controle/atualizar/<int:pk>', views.analise_ponto_controle_update, name='analise_ponto_controle_update'),
     path('folha-trabalho/<int:pk>', FolhaTrabalhoPrintView.as_view(), name='folha_trabalho_pdf'),
 
+    path('ponto-controle/analise/<int:pk>', views.ponto_controle_detail_analise, name='ponto_controle_detail_analise'),
+
     path('observacao-tarefa/criar/<int:pk>', views.observacao_tarefa_create, name='observacao_tarefa_create'),
     path('observacao-tarefa/atualizar/<int:pk>', views.observacao_tarefa_update, name='observacao_tarefa_update'),
 

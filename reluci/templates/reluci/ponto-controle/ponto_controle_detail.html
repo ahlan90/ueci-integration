@@ -6,7 +6,15 @@
 
 <div class="container-fluid">
 
-    <div class="row justify-content-end mr-1 mb-2">
+    <div class="row justify-content-between mr-1 mb-2">
+        <div></div>
+        <div>
+            {% for subponto in ponto_controle.sub_pontos_controle.all %}
+            <button>
+                {{ subponto.get_codigo_completo }}
+            </button>
+            {% endfor %}
+        </div>
         <a class="btn btn-warning btn-sm"
            target="_blank"
            href="{% url 'folha_trabalho_pdf' ponto_controle.id %}">
