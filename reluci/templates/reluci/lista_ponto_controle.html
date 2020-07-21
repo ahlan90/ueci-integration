@@ -12,7 +12,7 @@
                             aria-controls="collapsePt{{ ponto.get_codigo_completo|cut:'.' }}">
 
                         <h6 class="pl-2 align-self-center">
-                        {{ ponto.get_codigo_completo }} - {{ ponto.nome }}
+                            {{ ponto.get_codigo_completo }} - {{ ponto.nome }}
                         </h6>
 
                     </button>
@@ -28,7 +28,14 @@
                         <i class="fa fa-eye"></i>
                         Analisar
                     </a>
+                    <a type="button"
+                       class="btn btn-primary btn-sm btnModal"
+                       href="{% url 'ponto_controle_detail2' ponto.pk %}">
+                        <i class="fa fa-eye"></i>
+                        Analisar 2
+                    </a>
                 </div>
+
             </div>
 
             <div class="collapse" id="collapsePt{{ ponto.get_codigo_completo|cut:'.' }}">

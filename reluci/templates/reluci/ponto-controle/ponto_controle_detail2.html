@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <table style="border-collapse: collapse; width: 100%;" border="0">
+            <tbody>
+            <tr>
+                <td style="width: 15%; height: 70px;"><img style="height: 80px;"
+                                                           src="https://e-docs.es.gov.br/images/editor/brasao/fe88eb2a-a1f3-4cb1-a684-87317baf5a57.png"/>
+                </td>
+                <td style="width: 85%;"><span
+                        style="font-size: 12pt;"><strong>GOVERNO DO ESTADO DO ESP&Iacute;RITO SANTO</strong></span><br/><span
+                        style="font-size: 11pt;"><strong>SECRETARIA DE ESTADO DA SEGURANCA PUBLICA E DEFESA SOCIAL - SESP</strong></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p style="text-align: center;"><span style="font-size: 12pt;"><strong>RELAT&Oacute;RIO DE ATIVIDADES REALIZADAS PELA UNIDADE DE CONTROLE INTERNO</strong></span>
+        </p>
+        <p><strong>Unidade Gestora Emitente:</strong> {{ ug }}
+            <br/><strong>C&oacute;digo da Unidade Gestora Emitente:</strong> {{ codigo_ug }}
+            <br/><strong>Exerc&iacute;cio:</strong> {{ exercicio }}
+        </p>
+        <table style="border-collapse: collapse; width: 100%; height: 126px;" class="tabela-folha">
+            <tbody>
+            <tr>
+                <td>
+                    <p><strong>Folha de Trabalho n&ordm;:</strong></p>
+                    <p>&nbsp;{{ numero_folha_trabalho }}</p>
+                </td>
+                <td>
+                    <p><strong>Data da conclus&atilde;o:</strong></p>
+                    <p>&nbsp;{{ data_conclusao|date:'d/m/y' }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 43.0883%;">
+                    <p><strong>Ponto de Controle n&ordm;:</strong></p>
+                    <p>{{ object.get_codigo_completo }}</p>
+                </td>
+                <td style="width: 24.522%;">
+                    <p><strong>Base Legal:</strong></p>
+                    <p>[descri&ccedil;&atilde;o da base legal do ponto de controle em an&aacute;lise]</p>
+                </td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 43.0883%; height: 18px;" colspan="2">
+                    <p><strong>Servidor respons&aacute;vel pela An&aacute;lise:</strong></p>
+                    <p>&nbsp;</p>
+                </td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 43.0883%; height: 18px;" colspan="2">
+                    <p><strong>Servidor respons&aacute;vel pela Rotina de Controle:</strong></p>
+                    <p>&nbsp;</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <p><strong>S&iacute;ntese das informa&ccedil;&otilde;es obtidas / Conclus&otilde;es:</strong></p>
+                    {% for analise in object.analises.all %}
+                    <br>
+                    <p style="padding-left:2em"><strong>Data:</strong>{{ analise.criado | date:'d/m/Y' }}</p>
+                    <div style="padding-left:5em; padding-top: 1em;">
+                        {{ analise.analise|safe }}
+                    </div>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 43.0883%; height: 18px;" colspan="2">
+                    <p><strong>Assinatura do respons&aacute;vel pela An&aacute;lise:</strong></p>
+                    <p>&nbsp;</p>
+                    <p>[Nome]<br/>[Matr&iacute;cula]</p>
+                    <p>[Cargo/Fun&ccedil;&atilde;o]</p>
+                    <p>&nbsp;</p>
+                    <p>[Nome]<br/>[Matr&iacute;cula]</p>
+                    <p>[Cargo/Fun&ccedil;&atilde;o]</p>
+                    <p>&nbsp;</p>
+                </td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 43.0883%; height: 18px;" colspan="2">
+                    <p><strong>Ci&ecirc;ncia do respons&aacute;vel pela rotina de Controle:</strong></p>
+                    <p>&nbsp;</p>
+                    <p>[Nome]<br/>[Matr&iacute;cula]</p>
+                    <p>[Cargo/Fun&ccedil;&atilde;o]</p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row">
+        <div class="col-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home"
+                               role="tab" aria-controls="pills-home" aria-selected="true">Demanda</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact"
+                               role="tab" aria-controls="pills-contact" aria-selected="false">Análise</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                             aria-labelledby="pills-home-tab">
+                            <form method="POST">
+                                {% load crispy_forms_tags %}
+                                {% csrf_token %}
+                                {{ form_observacao|crispy }}
+                                <button class="btn btn-primary">Salvar</button>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="pills-contact" role="tabpanel"
+                             aria-labelledby="pills-contact-tab">
+                            <form method="POST">
+                                {% load crispy_forms_tags %}
+                                {% csrf_token %}
+                                {{ form_analise|crispy }}
+
+                                <button class="btn btn-primary align-self-end">Salvar</button>
+                            </form>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock content %}
+
+
+{% block scripts %}
+
+{{ block.super }}
+
+<script src="{% static 'apps/reluci/ponto-controle.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'apps/reluci/tarefa.js' %}" type="text/javascript" charset="utf-8"></script>
+
+
+{% endblock %}

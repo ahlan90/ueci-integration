@@ -189,6 +189,42 @@ def ponto_controle_detail(request, pk):
 
 
 @login_required
+def ponto_controle_detail2(request, pk):
+
+    itens_abordagem = ItemAbordagem.objects.all()
+
+    ponto_controle = get_object_or_404(PontoControle, pk=pk)
+
+    if request.method == 'POST':
+        form_analise = AnalisePontoControleForm(request.POST)
+        form_observacao = ObservacaoForm(request.POST)
+
+        if form_observacao.is_valid():
+            form_observacao.save()
+            return redirect('ponto_controle_detail', pk)
+
+        if form_analise.is_valid():
+            form_analise.save()
+            return redirect('ponto_controle_detail', pk)
+    else:
+        form_analise = AnalisePontoControleForm(
+            initial={'ponto_controle': ponto_controle, 'user': request.user})
+        form_observacao = ObservacaoForm(initial={'user': request.user}, ponto_controle=ponto_controle)
+
+    data = {
+        'titulo': 'Ponto de Controle ' + ponto_controle.get_codigo_completo(),
+        'itens_abordagem': itens_abordagem,
+        'ponto_controle': ponto_controle,
+        'form_analise': form_analise,
+        'form_observacao': form_observacao,
+        'sidebar': 'active'
+    }
+
+    return render(request, 'reluci/ponto-controle/ponto_controle_detail2.html', data)
+
+
+
+@login_required
 def ponto_controle_detail_analise(request, pk):
 
     itens_abordagem = ItemAbordagem.objects.all()
